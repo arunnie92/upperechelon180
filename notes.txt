@@ -1,0 +1,18 @@
+next todo:
+- move eno from sheets to microsoft excel
+- create one mass script that reads an excel sheet of eno info to create profile
+    e.g. currently on script is in node, another is in go
+
+
+backlog:
+    - script create profiles based on number of cc info's
+    - create private github repo
+    - make sure CCInfo.CardType ony allows the card type strings
+    - really make CreateAddress random usuing all letters of alphabet and digits 0-9
+    - clear byte[] of credit card after profiles created?
+    - add rules while injesting
+        e.g. only have specific strings, strings must be of certain length (anything else or more should error)
+    - create ui 
+    - this works for phantom but what about other bots?
+    - use absolute paths
+    - es6 enable but do i need if its all one language?

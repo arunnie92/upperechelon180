@@ -3,6 +3,6 @@ Foot Stie Rules:
  footaction, footlocker, champs, east bay
  
 - address lines needs to end with a 3 alphanumeric string
- e.g. 123 Test Road 2RJ Apt 45 Pacific, California, 94044
+ e.g. 123 Test Road 2RJ Apt 11 City, State, 00000
 
-- when do restocks happen
+- when do restocks happen?

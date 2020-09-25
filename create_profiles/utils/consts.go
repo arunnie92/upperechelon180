@@ -40,10 +40,10 @@ const champs = "Champs"
 const eastBay = "EastBay"
 
 // FootSites | array of foot sites
-var FootSites = []string{footLocker, finishLine, champs, eastBay}
+var FootSites = []string{footLocker, footAction, champs, eastBay}
 
 const finishLine = "Finsih_Line"
 const shoePalace = "Shoe_Palace"
-const BestBuy = "BestBuy"
 
-var otherFootSites = []string{finishLine}
+// BestBuy | Best buy site
+const BestBuy = "BestBuy"

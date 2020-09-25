@@ -27,6 +27,7 @@ func RandomIndex(min, max int) int {
 
 // ManipulateName manipulates name
 func ManipulateName(name string) string {
+
 	nameIndex := RandomIndex(0, len(name))
 
 	runes := []rune(name)
@@ -35,7 +36,7 @@ func ManipulateName(name string) string {
 		string(runes[nameIndex:nameIndex+1]),
 		string(runes[nameIndex+1:len(name)]))
 
-	return newName
+	return strings.Title(strings.ToLower(newName))
 }
 
 // CreateAddress creates an address with a concatenated alphanumerica value

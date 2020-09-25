@@ -68,13 +68,15 @@ func main() {
 		// Setup Address
 		tempProfile.Same = true
 
-		tempProfile.Shipping.Address = utils.Address
+		address := utils.CreateAddress(utils.Address)
+
+		tempProfile.Shipping.Address = address
 		tempProfile.Shipping.Apt = utils.Apt
 		tempProfile.Shipping.City = utils.City
 		tempProfile.Shipping.State = utils.State
 		tempProfile.Shipping.Zip = utils.Zip
 
-		tempProfile.Billing.Address = utils.CreateAddress(utils.Address)
+		tempProfile.Billing.Address = address
 		tempProfile.Billing.Apt = utils.Apt
 		tempProfile.Billing.City = utils.City
 		tempProfile.Billing.State = utils.State
@@ -82,8 +84,8 @@ func main() {
 
 		tempProfile.Country = utils.Country
 
-		tempFirstName := utils.ManipulateName(utils.FirstName)
-		tempLastName := utils.ManipulateName(utils.LastName)
+		firstName := utils.ManipulateName(utils.FirstName)
+		lastName := utils.ManipulateName(utils.LastName)
 
 		site := creditCardInformation[creditCardIndex].Site
 		if strings.Compare(site, utils.BestBuy) == 0 {
@@ -91,10 +93,10 @@ func main() {
 			randomdata.LastName()
 		}
 
-		tempProfile.Shipping.FirstName = tempFirstName
-		tempProfile.Shipping.LastName = tempLastName
-		tempProfile.Billing.FirstName = utils.FirstName
-		tempProfile.Billing.LastName = utils.LastName
+		tempProfile.Shipping.FirstName = firstName
+		tempProfile.Shipping.LastName = lastName
+		tempProfile.Billing.FirstName = firstName
+		tempProfile.Billing.LastName = lastName
 
 		// Setup Email
 		tempProfile.Email = utils.CreateRandomEmail(tempProfile.Shipping.FirstName, tempProfile.Shipping.LastName)

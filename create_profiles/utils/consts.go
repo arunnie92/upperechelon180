@@ -4,10 +4,10 @@ package utils
 const CreditCardPath = "../data/eno.json"
 
 // LastName | last name of profile
-const LastName = "Chanthirakanthan"
+const LastName = "chanthirakanthan"
 
 // FirstName | first name of profile
-const FirstName = "Arunn"
+const FirstName = "arunn"
 
 // Address | first line of address
 const Address = "105 Esplanade Ave"

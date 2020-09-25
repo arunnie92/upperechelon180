@@ -1,8 +1,8 @@
 Foot Site Rules:
 - foot sites are:
  footaction, footlocker, champs, east bay
- 
 - address lines needs to end with a 3 alphanumeric string
  e.g. 123 Test Road 2RJ Apt 11 City, State, 00000
+- both billing and shipping addresses should be the same
 
 - when do restocks happen?

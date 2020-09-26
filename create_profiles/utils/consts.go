@@ -3,6 +3,9 @@ package utils
 // CreditCardPath | path of creidt card data
 const CreditCardPath = "../data/eno.json"
 
+// AllProfilesPath | path to export all profiles
+const AllProfilesPath = "../../../profiles/all_profiles.json"
+
 // LastName | last name of profile
 const LastName = "chanthirakanthan"
 

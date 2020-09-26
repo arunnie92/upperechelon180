@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"math/rand"
 	"strings"
+
+	"github.com/Pallinder/go-randomdata"
 )
 
 // CreateRandomEmail creates random email based on two strings
@@ -52,4 +54,71 @@ func CreateAddress(address string) string {
 // GetFootSite | returns foot site based on input
 func GetFootSite(num int) string {
 	return FootSites[num%len(FootSites)]
+}
+
+// CreateProfile | returns a newly created profile based on an index and virtual card information
+func CreateProfile(virtualCard CCInfo, index int) Profile {
+	var profile Profile
+
+	//////////////////////////////////////////////
+	// KEEP THESE FOR FUTURE REFERENCE
+	// rand.Seed(time.Now().UTC().UnixNano())
+	// index := RandomIndex(0, 3)
+	/////////////////////////////////////////////
+
+	// Setup Credit Card Information
+	profile.CCNumber = virtualCard.CCNumber
+	profile.CVV = virtualCard.CVV
+	profile.ExpMonth = virtualCard.ExpMonth
+	profile.ExpYear = virtualCard.ExpYear
+	profile.CardType = virtualCard.CardType
+
+	// Setup Phone Number
+	profile.Phone = CreateRandomPhoneNumber()
+	if len(profile.Phone) != 10 {
+		fmt.Println(fmt.Sprintf("wrong number at %s", profile.Name))
+	}
+
+	// Setup Address
+	profile.Same = true
+
+	address := CreateAddress(Address)
+
+	profile.Shipping.Address = address
+	profile.Shipping.Apt = Apt
+	profile.Shipping.City = City
+	profile.Shipping.State = State
+	profile.Shipping.Zip = Zip
+
+	profile.Billing.Address = address
+	profile.Billing.Apt = Apt
+	profile.Billing.City = City
+	profile.Billing.State = State
+	profile.Billing.Zip = Zip
+
+	profile.Country = Country
+
+	// Setup First Name & Last Name
+	firstName := ManipulateName(FirstName)
+	lastName := ManipulateName(LastName)
+
+	// TODO: create rules function based on what site the profile is being used
+	site := virtualCard.Site
+	if strings.Compare(site, BestBuy) == 0 {
+		randomdata.FirstName(randomdata.Male)
+		randomdata.LastName()
+	}
+
+	profile.Shipping.FirstName = firstName
+	profile.Shipping.LastName = lastName
+	profile.Billing.FirstName = firstName
+	profile.Billing.LastName = lastName
+
+	// Setup Email
+	profile.Email = CreateRandomEmail(firstName, lastName)
+
+	// Setup Profile Name
+	profile.Name = fmt.Sprintf("Profile_%d_%s", index, site)
+
+	return profile
 }

@@ -17,3 +17,4 @@ backlog:
     - this works for phantom but what about other bots?
     - use absolute paths
     - es6 enable but do i need if its all one language?
+    - add flags to create profiles for just certain sites OR a tweak scrip to create one mass json profile and one json profile for each site 

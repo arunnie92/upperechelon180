@@ -11,9 +11,6 @@ import (
 	"github.com/Pallinder/go-randomdata"
 )
 
-type creditCards []utils.CCInfo
-type phantomProfiles []utils.Profile
-
 // TODO: create 50 eno cards for each foot site, should have a total of 200 cards and 200 profiles
 // TODO: add rules for specific sites
 func main() {
@@ -26,7 +23,7 @@ func main() {
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	var creditCardInformation creditCards
+	var creditCardInformation []utils.CCInfo
 
 	unmarshalErr := json.Unmarshal(byteValue, &creditCardInformation)
 	if unmarshalErr != nil {
@@ -37,86 +34,84 @@ func main() {
 
 	fmt.Println("Creating profiles...")
 
-	numberOfProfiles := len(creditCardInformation)
-
-	var emptyProfiles phantomProfiles
+	var profiles []utils.Profile
 
 	// TODO: export out to function
-	// TODO: use range
-	for creditCardIndex := 0; creditCardIndex < numberOfProfiles; creditCardIndex++ {
-		var tempProfile utils.Profile
+	for index := range creditCardInformation {
+		var profile utils.Profile
 
 		//////////////////////////////////////////////
 		// KEEP THESE FOR FUTURE REFERENCE
 		// rand.Seed(time.Now().UTC().UnixNano())
-		// creditCardIndex := utils.RandomIndex(0, 3)
+		// index := utils.RandomIndex(0, 3)
 		/////////////////////////////////////////////
 
 		// Setup Credit Card Information
-		tempProfile.CCNumber = creditCardInformation[creditCardIndex].CCNumber
-		tempProfile.CVV = creditCardInformation[creditCardIndex].CVV
-		tempProfile.ExpMonth = creditCardInformation[creditCardIndex].ExpMonth
-		tempProfile.ExpYear = creditCardInformation[creditCardIndex].ExpYear
-		tempProfile.CardType = creditCardInformation[creditCardIndex].CardType
+		profile.CCNumber = creditCardInformation[index].CCNumber
+		profile.CVV = creditCardInformation[index].CVV
+		profile.ExpMonth = creditCardInformation[index].ExpMonth
+		profile.ExpYear = creditCardInformation[index].ExpYear
+		profile.CardType = creditCardInformation[index].CardType
 
 		// Setup Phone Number
-		tempProfile.Phone = utils.CreateRandomPhoneNumber()
-		if len(tempProfile.Phone) != 10 {
-			fmt.Println(fmt.Sprintf("wrong number at %s", tempProfile.Name))
+		profile.Phone = utils.CreateRandomPhoneNumber()
+		if len(profile.Phone) != 10 {
+			fmt.Println(fmt.Sprintf("wrong number at %s", profile.Name))
 		}
 
 		// Setup Address
-		tempProfile.Same = true
+		profile.Same = true
 
 		address := utils.CreateAddress(utils.Address)
 
-		tempProfile.Shipping.Address = address
-		tempProfile.Shipping.Apt = utils.Apt
-		tempProfile.Shipping.City = utils.City
-		tempProfile.Shipping.State = utils.State
-		tempProfile.Shipping.Zip = utils.Zip
+		profile.Shipping.Address = address
+		profile.Shipping.Apt = utils.Apt
+		profile.Shipping.City = utils.City
+		profile.Shipping.State = utils.State
+		profile.Shipping.Zip = utils.Zip
 
-		tempProfile.Billing.Address = address
-		tempProfile.Billing.Apt = utils.Apt
-		tempProfile.Billing.City = utils.City
-		tempProfile.Billing.State = utils.State
-		tempProfile.Billing.Zip = utils.Zip
+		profile.Billing.Address = address
+		profile.Billing.Apt = utils.Apt
+		profile.Billing.City = utils.City
+		profile.Billing.State = utils.State
+		profile.Billing.Zip = utils.Zip
 
-		tempProfile.Country = utils.Country
+		profile.Country = utils.Country
 
 		firstName := utils.ManipulateName(utils.FirstName)
 		lastName := utils.ManipulateName(utils.LastName)
 
-		site := creditCardInformation[creditCardIndex].Site
+		site := creditCardInformation[index].Site
 		if strings.Compare(site, utils.BestBuy) == 0 {
 			randomdata.FirstName(randomdata.Male)
 			randomdata.LastName()
 		}
 
-		tempProfile.Shipping.FirstName = firstName
-		tempProfile.Shipping.LastName = lastName
-		tempProfile.Billing.FirstName = firstName
-		tempProfile.Billing.LastName = lastName
+		profile.Shipping.FirstName = firstName
+		profile.Shipping.LastName = lastName
+		profile.Billing.FirstName = firstName
+		profile.Billing.LastName = lastName
 
 		// Setup Email
-		tempProfile.Email = utils.CreateRandomEmail(tempProfile.Shipping.FirstName, tempProfile.Shipping.LastName)
+		profile.Email = utils.CreateRandomEmail(profile.Shipping.FirstName, profile.Shipping.LastName)
 
 		// Setup Profile Name
-		tempProfile.Name = fmt.Sprintf("Profile_%d_%s", creditCardIndex, site)
+		profile.Name = fmt.Sprintf("Profile_%d_%s", index, site)
 
 		// Add Complete Profile
-		emptyProfiles = append(emptyProfiles, tempProfile)
+		profiles = append(profiles, profile)
 	}
 
+	numberOfProfiles := len(creditCardInformation)
 	fmt.Println(fmt.Sprintf("%d profiles created...", numberOfProfiles))
 
-	file, marshallErr := json.MarshalIndent(emptyProfiles, "", " ")
+	file, marshallErr := json.MarshalIndent(profiles, "", " ")
 	if marshallErr != nil {
 		fmt.Println(marshallErr)
 		return
 	}
 
-	_ = ioutil.WriteFile("../../../real_profiles.json", file, 0644)
+	_ = ioutil.WriteFile("../../../profiles/all_profiles.json", file, 0644)
 
 	fmt.Println("Finished creating profiles...")
 }

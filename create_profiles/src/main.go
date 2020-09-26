@@ -9,8 +9,6 @@ import (
 	"../utils"
 )
 
-// TODO: create 50 eno cards for each foot site, should have a total of 200 cards and 200 profiles
-// TODO: add rules for specific sites
 func main() {
 	jsonFile, jsonFilErr := os.Open(utils.CreditCardPath)
 	if jsonFilErr != nil {

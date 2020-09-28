@@ -1,6 +1,5 @@
 next todo:
 - create 50 eno cards for each foot site, should have a total of 200 cards and 200 profiles
-- create one mass json profile and one json profile for each site
 - move eno from sheets to microsoft excel
 - create one mass script that reads an excel sheet of eno info to create profile
     e.g. currently one script is in node, another is in go
@@ -8,7 +7,6 @@ next todo:
 
 
 backlog:
-    - create private github repo
     - make sure CCInfo.CardType ony allows the card type strings
     - really make CreateAddress random usuing all letters of alphabet and digits 0-9
     - clear byte[] of credit card after profiles created?

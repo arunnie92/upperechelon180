@@ -32,23 +32,19 @@ const Zip = "94044"
 // Country | country of address
 const Country = "US"
 
-const cardTypeMASTER = "master"
-const cardTypeDISCOVER = "discover"
-const cardTypeVISA = "visa"
-const cardTypeAMEX = "amex"
-
 const domain = "upperechelon180.com"
 
 const footLocker = "FootLocker"
 const footAction = "FootAction"
 const champs = "Champs"
 const eastBay = "EastBay"
+const yeezySupply = "YeezySupply"
 
 // FootSites | array of foot sites
-var FootSites = []string{footLocker, footAction, champs, eastBay}
+var FootSites = []string{footLocker, footAction, champs, eastBay, yeezySupply}
 
-const finishLine = "Finsih_Line"
-const shoePalace = "Shoe_Palace"
+const finishLine = "FinishLine"
+const shoePalace = "ShoePalace"
 
 // BestBuy | Best buy site
 const BestBuy = "BestBuy"

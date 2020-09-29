@@ -4,6 +4,7 @@ next todo:
 - create one mass script that reads an excel sheet of eno info to create profile
     e.g. currently one script is in node, another is in go
     https://github.com/360EntSecGroup-Skylar/excelize
+- not use same full name for same site
 
 
 backlog:

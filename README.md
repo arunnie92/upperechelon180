@@ -2,13 +2,19 @@
 
 Scripts for Phantom
 
-### To run script to create profiles:
+### To rall scripts:
+
+```
+./main.sh
+```
+
+### To run Go script to create profiles:
 
 ```
 go run main.go
 ```
 
-### To run script to read excel sheet:
+### To run Node script to read excel sheet:
 
 ```
 node index.js

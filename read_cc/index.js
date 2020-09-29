@@ -6,6 +6,7 @@ const xlsx = require("xlsx");
 const creditCardInfoPath = "./data/eno.xlsx";
 const exportPath = "../create_profiles/data/eno.json";
 
+console.log("Reading excel workbook...");
 const workbook = xlsx.readFile(creditCardInfoPath);
 console.log("Successfully imported excel workbook...");
 

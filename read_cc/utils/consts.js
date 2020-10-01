@@ -1,4 +1,5 @@
-export const FOOTLOCKER_WORKSHEET = "FootLocker"
-export const FOOTACTION_WORKSHEET = "FootAction"
-export const EASTBAY_WORKSHEET = "EastBay"
-export const CHAMPS_WORKSHEET = "Champs"
+const virutalCardWorkbookPath = "./data/eno.xlsx";
+const exportPath = "../create_profiles/data/eno.json";
+
+exports.virutalCardWorkbookPath = virutalCardWorkbookPath;
+exports.exportPath = exportPath;

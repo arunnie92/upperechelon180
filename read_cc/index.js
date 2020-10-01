@@ -1,16 +1,12 @@
 const fs = require("fs");
 const xlsx = require("xlsx");
-
-// TODO: make imports
-
-const creditCardInfoPath = "./data/eno.xlsx";
-const exportPath = "../create_profiles/data/eno.json";
+const consts = require("./utils/consts");
 
 console.log("Reading excel workbook...");
-const workbook = xlsx.readFile(creditCardInfoPath);
+const workbook = xlsx.readFile(consts.virutalCardWorkbookPath);
 console.log("Successfully imported excel workbook...");
 
-const creditCardInformation = [];
+const virutalCardInformation = [];
 const sheetNames = workbook.SheetNames;
 
 for (var sheetNameIndex in sheetNames) {
@@ -26,15 +22,15 @@ for (var sheetNameIndex in sheetNames) {
     virutal_card.CCNumber = removed_whitespace_number;
     virutal_card.Site = sheetName;
 
-    creditCardInformation.push(virutal_card);
+    virutalCardInformation.push(virutal_card);
   }
 
   console.log(`Successfully imported ${sheetName} virutal cards...`);
 }
 
 fs.writeFileSync(
-  exportPath,
-  JSON.stringify(creditCardInformation, null, 2),
+  consts.exportPath,
+  JSON.stringify(virutalCardInformation, null, 2),
   (err) => {
     console.log(err);
     return;

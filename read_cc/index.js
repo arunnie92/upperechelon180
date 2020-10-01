@@ -29,7 +29,7 @@ for (var sheetNameIndex in sheetNames) {
     creditCardInformation.push(virutal_card);
   }
 
-  console.log(`Successfuly imported ${sheetName} virutal cards...`);
+  console.log(`Successfully imported ${sheetName} virutal cards...`);
 }
 
 fs.writeFileSync(

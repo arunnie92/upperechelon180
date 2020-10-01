@@ -2,7 +2,7 @@
 
 Scripts for Phantom
 
-### To rall scripts:
+### To run all scripts:
 
 ```
 ./main.sh
@@ -23,5 +23,5 @@ node index.js
 ### Delete all profiles:
 
 ```
-rm ~/Library/ApplicationSupport/Phantom/ProfileManager.json
+rm -f ~/Library/ApplicationSupport/Phantom/ProfileManager.json
 ```

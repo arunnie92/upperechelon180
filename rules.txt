@@ -6,3 +6,5 @@ Foot Site Rules:
 - both billing and shipping addresses should be the same
 
 - when do restocks happen?
+
+- tax is applied based on the shipping addressd

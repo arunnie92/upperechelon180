@@ -20,3 +20,4 @@ backlog:
     - es6 enable but do i need if its all one language?
     - add flags to create profiles for just certain sites  
     - how can i generate my own proxys to use instead of paying for the service
+    - what does the data look like for Phantom notification settings

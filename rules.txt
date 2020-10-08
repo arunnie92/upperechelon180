@@ -7,4 +7,6 @@ Foot Site Rules:
 
 - when do restocks happen?
 
-- tax is applied based on the shipping addressd
+- tax is applied based on the shipping addressing
+    sale tax shipped to pacifica is 9.25%
+    sale tax shipped to pacifica is 8.5%

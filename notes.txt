@@ -4,7 +4,6 @@ next todo:
     e.g. currently one script is in node, another is in go
     https://github.com/360EntSecGroup-Skylar/excelize
 - not use same full name for same site
-- create an all FootSite profile
 
 
 backlog:

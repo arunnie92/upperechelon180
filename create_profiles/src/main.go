@@ -33,6 +33,8 @@ func main() {
 	profiles := []utils.Profile{}
 	profileMap := make(map[string][]utils.Profile)
 
+	footSiteProfilesArr := []utils.Profile{}
+
 	for index, virutalCard := range creditCardInformation {
 		newProfile := utils.CreateProfile(virutalCard, index)
 
@@ -50,8 +52,15 @@ func main() {
 		profileMap[site] = arr
 
 		profiles = append(profiles, newProfile)
+
+		if utils.IsFootSite(site) {
+			footSiteProfilesArr = append(footSiteProfilesArr, newProfile)
+		}
 	}
 
+	fmt.Println(fmt.Sprintf("Finished creating %d Foot Site profiles...", len(footSiteProfilesArr)))
+
+	numOfExports := 0
 	for siteKey, arrValue := range profileMap {
 		file, marshallErr := json.MarshalIndent(arrValue, "", " ")
 		if marshallErr != nil {
@@ -67,11 +76,9 @@ func main() {
 			return
 		}
 
+		numOfExports++
 		fmt.Println(fmt.Sprintf("Finished creating %d %s profiles...", len(arrValue), siteKey))
 	}
-
-	numberOfProfiles := len(creditCardInformation)
-	fmt.Println(fmt.Sprintf("%d profiles created...", numberOfProfiles))
 
 	file, marshallErr := json.MarshalIndent(profiles, "", " ")
 	if marshallErr != nil {
@@ -80,11 +87,23 @@ func main() {
 	}
 
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_Profiles.json")
-	writeFileErr := ioutil.WriteFile(allProfilesPath, file, 0644)
-	if writeFileErr != nil {
-		fmt.Println(writeFileErr)
+	allProfilesWriteFileErr := ioutil.WriteFile(allProfilesPath, file, 0644)
+	if allProfilesWriteFileErr != nil {
+		fmt.Println(allProfilesWriteFileErr)
 		return
 	}
+	numOfExports++
 
-	fmt.Println(fmt.Sprintf("Finished creating all %d profiles...", numberOfProfiles))
+	footSiteProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "FootSite_Profiles.json")
+	footSiteProfilesWriteFileErr := ioutil.WriteFile(footSiteProfilesPath, file, 0644)
+	if footSiteProfilesWriteFileErr != nil {
+		fmt.Println(footSiteProfilesWriteFileErr)
+		return
+	}
+	numOfExports++
+
+	fmt.Println()
+	fmt.Println(fmt.Sprintf("%d profiles created...", len(creditCardInformation))) // number of profiles created
+	fmt.Println(fmt.Sprintf("%d exported profiles...", numOfExports))              // number of exported profiles
+	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
 }

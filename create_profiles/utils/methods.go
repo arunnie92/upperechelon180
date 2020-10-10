@@ -122,3 +122,14 @@ func CreateProfile(virtualCard CCInfo, index int) Profile {
 
 	return profile
 }
+
+// IsFootSite | checks if the site a foot site
+func IsFootSite(site string) bool {
+	for _, footSite := range FootSites {
+		if strings.Compare(site, footSite) == 0 {
+			return true
+		}
+	}
+
+	return false
+}

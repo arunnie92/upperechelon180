@@ -41,7 +41,7 @@ const eastBay = "EastBay"
 const yeezySupply = "YeezySupply"
 
 // FootSites | array of foot sites
-var FootSites = []string{footLocker, footAction, champs, eastBay, yeezySupply}
+var FootSites = []string{footLocker, footAction, champs, eastBay}
 
 const finishLine = "FinishLine"
 const shoePalace = "ShoePalace"

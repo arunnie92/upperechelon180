@@ -1,7 +1,7 @@
 package utils
 
-// CCInfo | Store credit card information
-type CCInfo struct {
+// VirutalCCInfo | Store credit card information
+type VirutalCCInfo struct {
 	CCNumber string `json:"CCNumber"` // CCNumber | 16 digit credit card number
 	CVV      string `json:"CVV"`      // CVV | 3 digit secruity code for credit card
 	ExpMonth string `json:"ExpMonth"` // ExpMonth | expirtation month of credit card

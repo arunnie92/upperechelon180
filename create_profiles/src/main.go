@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	jsonFile, jsonFilErr := os.Open(utils.CreditCardPath)
+	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {
 		fmt.Println(jsonFilErr)
 		return
@@ -19,14 +19,14 @@ func main() {
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	var creditCardInformation []utils.CCInfo
+	var virutalCreditCardInformation []utils.VirutalCCInfo
 
-	unmarshalErr := json.Unmarshal(byteValue, &creditCardInformation)
+	unmarshalErr := json.Unmarshal(byteValue, &virutalCreditCardInformation)
 	if unmarshalErr != nil {
 		fmt.Println(unmarshalErr)
 		return
 	}
-	fmt.Println("Successfully uploaded credit card info...")
+	fmt.Println("Successfully uploaded virutal credit card information...")
 
 	fmt.Println("Creating profiles...")
 
@@ -35,7 +35,7 @@ func main() {
 
 	footSiteProfilesArr := []utils.Profile{}
 
-	for index, virutalCard := range creditCardInformation {
+	for index, virutalCard := range virutalCreditCardInformation {
 		newProfile := utils.CreateProfile(virutalCard, index)
 
 		site := virutalCard.Site
@@ -103,7 +103,7 @@ func main() {
 	numOfExports++
 
 	fmt.Println()
-	fmt.Println(fmt.Sprintf("%d profiles created...", len(creditCardInformation))) // number of profiles created
-	fmt.Println(fmt.Sprintf("%d exported profiles...", numOfExports))              // number of exported profiles
+	fmt.Println(fmt.Sprintf("%d profiles created...", len(virutalCreditCardInformation))) // number of profiles created
+	fmt.Println(fmt.Sprintf("%d exported profiles...", numOfExports))                     // number of exported profiles
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
 }

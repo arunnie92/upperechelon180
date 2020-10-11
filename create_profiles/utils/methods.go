@@ -57,7 +57,7 @@ func GetFootSite(num int) string {
 }
 
 // CreateProfile | returns a newly created profile based on an index and virtual card information
-func CreateProfile(virtualCard CCInfo, index int) Profile {
+func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 	var profile Profile
 
 	//////////////////////////////////////////////
@@ -67,11 +67,11 @@ func CreateProfile(virtualCard CCInfo, index int) Profile {
 	/////////////////////////////////////////////
 
 	// Setup Credit Card Information
-	profile.CCNumber = virtualCard.CCNumber
-	profile.CVV = virtualCard.CVV
-	profile.ExpMonth = virtualCard.ExpMonth
-	profile.ExpYear = virtualCard.ExpYear
-	profile.CardType = virtualCard.CardType
+	profile.CCNumber = virtualCreditCard.CCNumber
+	profile.CVV = virtualCreditCard.CVV
+	profile.ExpMonth = virtualCreditCard.ExpMonth
+	profile.ExpYear = virtualCreditCard.ExpYear
+	profile.CardType = virtualCreditCard.CardType
 
 	// Setup Phone Number
 	profile.Phone = CreateRandomPhoneNumber()
@@ -103,7 +103,7 @@ func CreateProfile(virtualCard CCInfo, index int) Profile {
 	lastName := ManipulateName(LastName)
 
 	// TODO: create rules function based on what site the profile is being used
-	site := virtualCard.Site
+	site := virtualCreditCard.Site
 	if strings.Compare(site, BestBuy) == 0 {
 		randomdata.FirstName(randomdata.Male)
 		randomdata.LastName()

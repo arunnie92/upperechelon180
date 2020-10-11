@@ -2,8 +2,8 @@ package utils
 
 const absolutePath = "/Users/arunnie92/Documents/upper_echelon_180"
 
-// CreditCardPath | path of creidt card data
-const CreditCardPath = absolutePath + "/upperechelon180/create_profiles/data/eno.json"
+// VirutalCreditCardPath | path of virutal credit card data
+const VirutalCreditCardPath = absolutePath + "/upperechelon180/create_profiles/data/eno.json"
 
 // ProfilesPath | path to export all profiles
 const ProfilesPath = absolutePath + "/profiles"

@@ -9,6 +9,8 @@ import (
 	"../utils"
 )
 
+// todo: create CREATE TASKS script
+
 func main() {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {

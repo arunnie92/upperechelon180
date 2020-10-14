@@ -126,7 +126,7 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 // IsFootSite | checks if the site a foot site
 func IsFootSite(site string) bool {
 	for _, footSite := range FootSites {
-		if strings.Compare(site, footSite) == 0 {
+		if site == footSite {
 			return true
 		}
 	}

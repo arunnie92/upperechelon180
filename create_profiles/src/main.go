@@ -9,12 +9,6 @@ import (
 	"../utils"
 )
 
-// TODO: create compareProfile
-// each profile is different, different name and/or address from each other for each site, based on phantom documentation
-
-// TODO: create CREATE TASKS script
-// think this through, this is a big change and requires the prior todo to be finished first
-
 func main() {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {
@@ -41,25 +35,33 @@ func main() {
 
 	footSiteProfilesArr := []utils.Profile{}
 
-	for index, virutalCard := range virutalCreditCardInformation {
-		newProfile := utils.CreateProfile(virutalCard, index)
+	previousSite := virutalCreditCardInformation[0].Site
 
-		site := virutalCard.Site
+	for index, virutalCard := range virutalCreditCardInformation {
+		currentSite := virutalCard.Site
+
+		// instantiate map again from reusing full name
+		if currentSite != previousSite {
+			utils.FullNameMap = make(map[string]bool)
+			previousSite = virutalCard.Site
+		}
+
+		newProfile := utils.CreateProfile(virutalCard, index)
 
 		arr := []utils.Profile{}
 
-		if profileMap[site] == nil {
+		if profileMap[currentSite] == nil {
 			arr = append(arr, newProfile)
 		} else {
-			arr = profileMap[site]
+			arr = profileMap[currentSite]
 			arr = append(arr, newProfile)
 		}
 
-		profileMap[site] = arr
+		profileMap[currentSite] = arr
 
 		profiles = append(profiles, newProfile)
 
-		if utils.IsFootSite(site) {
+		if utils.IsFootSite(currentSite) {
 			footSiteProfilesArr = append(footSiteProfilesArr, newProfile)
 		}
 	}

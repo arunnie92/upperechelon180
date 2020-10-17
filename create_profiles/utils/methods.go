@@ -27,7 +27,7 @@ func RandomIndex(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
-// ManipulateName manipulates name
+// ManipulateName manipulates name string
 func ManipulateName(name string) string {
 
 	nameIndex := RandomIndex(0, len(name))
@@ -39,6 +39,23 @@ func ManipulateName(name string) string {
 		string(runes[nameIndex+1:len(name)]))
 
 	return strings.Title(strings.ToLower(newName))
+}
+
+// ManipulateFullName | Manipulates full name and keeps track of used names
+func ManipulateFullName() (string, string) {
+	firstName := ManipulateName(FirstName)
+	lastName := ManipulateName(LastName)
+
+	fullName := fmt.Sprintf("%s %s", firstName, lastName)
+
+	nameExists := FullNameMap[fullName]
+
+	if !nameExists {
+		FullNameMap[fullName] = true
+		return firstName, lastName
+	}
+
+	return ManipulateFullName()
 }
 
 // CreateAddress creates an address with a concatenated alphanumerica value
@@ -53,7 +70,7 @@ func CreateAddress(address string) string {
 
 // GetFootSite | returns foot site based on input
 func GetFootSite(num int) string {
-	return FootSites[num%len(FootSites)]
+	return FootSitesArr[num%len(FootSitesArr)]
 }
 
 // CreateProfile | returns a newly created profile based on an index and virtual card information
@@ -99,8 +116,8 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 	profile.Country = Country
 
 	// Setup First Name & Last Name
-	firstName := ManipulateName(FirstName)
-	lastName := ManipulateName(LastName)
+	firstName, lastName := ManipulateFullName()
+	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
 
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
@@ -125,11 +142,5 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 
 // IsFootSite | checks if the site a foot site
 func IsFootSite(site string) bool {
-	for _, footSite := range FootSites {
-		if site == footSite {
-			return true
-		}
-	}
-
-	return false
+	return FootSitesMap[site]
 }

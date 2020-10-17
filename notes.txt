@@ -3,8 +3,10 @@ next todo:
 - create one script in Go that reads an excel sheet of eno info to create profile
     e.g. currently one script is in node, another is in go
     https://github.com/360EntSecGroup-Skylar/excelize
-- not use same full name for same site
-
+- create compareProfile
+    each profile is different, different name and/or address from each other for each site, based on phantom documentation
+- create CREATE TASKS script
+    think this through, this is a big change and requires the prior todo to be finished first
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings
@@ -21,3 +23,4 @@ backlog:
     - how can i generate my own proxys to use instead of paying for the service
     - what does the data look like for Phantom notification settings
     - add other sites
+    - the problem creating manipulating full name

@@ -34,17 +34,13 @@ const Country = "US"
 
 const domain = "upperechelon180.com"
 
-const footLocker = "FootLocker"
-const footAction = "FootAction"
-const champs = "Champs"
-const eastBay = "EastBay"
+const bestBuy = "BestBuy"
 const yeezySupply = "YeezySupply"
+const adidas = "AdidasUS"
+const footLocker = "FootLockerUS"
+const footAction = "FootAction"
+const champsSports = "ChampsSports"
+const eastbay = "Eastbay"
 
 // FootSites | array of foot sites
-var FootSites = []string{footLocker, footAction, champs, eastBay}
-
-const finishLine = "FinishLine"
-const shoePalace = "ShoePalace"
-
-// BestBuy | Best buy site
-const BestBuy = "BestBuy"
+var FootSites = []string{footLocker, footAction, champsSports, eastbay}

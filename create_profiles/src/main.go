@@ -9,7 +9,11 @@ import (
 	"../utils"
 )
 
-// todo: create CREATE TASKS script
+// TODO: create compareProfile
+// each profile is different, different name and/or address from each other for each site, based on phantom documentation
+
+// TODO: create CREATE TASKS script
+// think this through, this is a big change and requires the prior todo to be finished first
 
 func main() {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)

@@ -104,7 +104,7 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
-	if strings.Compare(site, BestBuy) == 0 {
+	if strings.Compare(site, bestBuy) == 0 {
 		randomdata.FirstName(randomdata.Male)
 		randomdata.LastName()
 	}

@@ -20,3 +20,4 @@ backlog:
     - add flags to create profiles for just certain sites  
     - how can i generate my own proxys to use instead of paying for the service
     - what does the data look like for Phantom notification settings
+    - add other sites

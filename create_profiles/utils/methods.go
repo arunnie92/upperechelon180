@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"strings"
 
@@ -143,4 +145,21 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 // IsFootSite | checks if the site a foot site
 func IsFootSite(site string) bool {
 	return FootSitesMap[site]
+}
+
+// ExportProfiles | exports profiles to json file
+func ExportProfiles(exportPath string, profileArr []Profile) error {
+	file, marshallErr := json.MarshalIndent(profileArr, "", " ")
+	if marshallErr != nil {
+		fmt.Println(marshallErr)
+		return marshallErr
+	}
+
+	writeFileErr := ioutil.WriteFile(exportPath, file, 0644)
+	if writeFileErr != nil {
+		fmt.Println(writeFileErr)
+		return writeFileErr
+	}
+
+	return nil
 }

@@ -69,35 +69,25 @@ func createFootSiteProfiles() {
 	}
 
 	numOfExports := 0
-	for siteKey, arrValue := range profileMap {
-		file, marshallErr := json.MarshalIndent(arrValue, "", " ")
-		if marshallErr != nil {
-			fmt.Println(marshallErr)
-			return
-		}
-
+	for siteKey, profileArr := range profileMap {
 		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
 
-		writeFileErr := ioutil.WriteFile(exportPath, file, 0644)
-		if writeFileErr != nil {
-			fmt.Println(writeFileErr)
+		exportProfilesErr := utils.ExportProfiles(exportPath, profileArr)
+		if exportProfilesErr != nil {
+			fmt.Println(exportProfilesErr)
 			return
 		}
 
 		numOfExports++
-		fmt.Println(fmt.Sprintf("Finished creating %d %s profiles...", len(arrValue), siteKey))
+
+		fmt.Println(fmt.Sprintf("Finished creating %d %s profiles...", len(profileArr), siteKey))
 	}
 
 	// write all profiles to json file
-	allProfilesFile, marshallErr := json.MarshalIndent(profiles, "", " ")
-	if marshallErr != nil {
-		fmt.Println(marshallErr)
-		return
-	}
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_FootSite_Profiles.json")
-	allProfilesWriteFileErr := ioutil.WriteFile(allProfilesPath, allProfilesFile, 0644)
-	if allProfilesWriteFileErr != nil {
-		fmt.Println(allProfilesWriteFileErr)
+	exportAllProfilesErr := utils.ExportProfiles(allProfilesPath, profiles)
+	if exportAllProfilesErr != nil {
+		fmt.Println(exportAllProfilesErr)
 		return
 	}
 	numOfExports++
@@ -168,49 +158,34 @@ func createProfiles() {
 	fmt.Println(fmt.Sprintf("Finished creating %d Foot Site profiles...", len(footSiteProfilesArr)))
 
 	numOfExports := 0
-	for siteKey, arrValue := range profileMap {
-		file, marshallErr := json.MarshalIndent(arrValue, "", " ")
-		if marshallErr != nil {
-			fmt.Println(marshallErr)
-			return
-		}
-
+	for siteKey, profileArr := range profileMap {
 		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
 
-		writeFileErr := ioutil.WriteFile(exportPath, file, 0644)
-		if writeFileErr != nil {
-			fmt.Println(writeFileErr)
+		exportProfilesErr := utils.ExportProfiles(exportPath, profileArr)
+		if exportProfilesErr != nil {
+			fmt.Println(exportProfilesErr)
 			return
 		}
 
 		numOfExports++
-		fmt.Println(fmt.Sprintf("Finished creating %d %s profiles...", len(arrValue), siteKey))
+
+		fmt.Println(fmt.Sprintf("Finished creating %d %s profiles...", len(profileArr), siteKey))
 	}
 
 	// write all profiles to json file
-	allProfilesFile, marshallErr := json.MarshalIndent(profiles, "", " ")
-	if marshallErr != nil {
-		fmt.Println(marshallErr)
-		return
-	}
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_Profiles.json")
-	allProfilesWriteFileErr := ioutil.WriteFile(allProfilesPath, allProfilesFile, 0644)
-	if allProfilesWriteFileErr != nil {
-		fmt.Println(allProfilesWriteFileErr)
+	exportAllProfilesErr := utils.ExportProfiles(allProfilesPath, profiles)
+	if exportAllProfilesErr != nil {
+		fmt.Println(exportAllProfilesErr)
 		return
 	}
 	numOfExports++
 
 	// write only foot site profiles to json file
-	footSiteProfilesFile, marshallErr := json.MarshalIndent(footSiteProfilesArr, "", " ")
-	if marshallErr != nil {
-		fmt.Println(marshallErr)
-		return
-	}
 	footSiteProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "FootSite_Profiles.json")
-	footSiteProfilesWriteFileErr := ioutil.WriteFile(footSiteProfilesPath, footSiteProfilesFile, 0644)
-	if footSiteProfilesWriteFileErr != nil {
-		fmt.Println(footSiteProfilesWriteFileErr)
+	exportFootSiteProfilesErr := utils.ExportProfiles(footSiteProfilesPath, footSiteProfilesArr)
+	if exportFootSiteProfilesErr != nil {
+		fmt.Println(exportFootSiteProfilesErr)
 		return
 	}
 	numOfExports++

@@ -9,7 +9,106 @@ import (
 	"../utils"
 )
 
-func main() {
+func createFootSiteProfiles() {
+	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
+	if jsonFilErr != nil {
+		fmt.Println(jsonFilErr)
+		return
+	}
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var virutalCreditCardInformation []utils.VirutalCCInfo
+
+	unmarshalErr := json.Unmarshal(byteValue, &virutalCreditCardInformation)
+	if unmarshalErr != nil {
+		fmt.Println(unmarshalErr)
+		return
+	}
+	fmt.Println("Successfully uploaded virutal credit card information...")
+
+	fmt.Println("Creating profiles...")
+
+	profiles := []utils.Profile{}
+	profileMap := make(map[string][]utils.Profile)
+
+	previousSite := virutalCreditCardInformation[0].Site
+
+	profilesCreated := 0
+
+	for index, virutalCard := range virutalCreditCardInformation {
+		currentSite := virutalCard.Site
+
+		if !utils.FootSitesMap[currentSite] {
+			continue
+		}
+
+		// instantiate map again from reusing full name
+		if currentSite != previousSite {
+			utils.FullNameMap = make(map[string]bool)
+			previousSite = virutalCard.Site
+		}
+
+		newProfile := utils.CreateProfile(virutalCard, index)
+
+		arr := []utils.Profile{}
+
+		if profileMap[currentSite] == nil {
+			arr = append(arr, newProfile)
+		} else {
+			arr = profileMap[currentSite]
+			arr = append(arr, newProfile)
+		}
+
+		profileMap[currentSite] = arr
+
+		profiles = append(profiles, newProfile)
+
+		profilesCreated++
+	}
+
+	numOfExports := 0
+	for siteKey, arrValue := range profileMap {
+		file, marshallErr := json.MarshalIndent(arrValue, "", " ")
+		if marshallErr != nil {
+			fmt.Println(marshallErr)
+			return
+		}
+
+		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
+
+		writeFileErr := ioutil.WriteFile(exportPath, file, 0644)
+		if writeFileErr != nil {
+			fmt.Println(writeFileErr)
+			return
+		}
+
+		numOfExports++
+		fmt.Println(fmt.Sprintf("Finished creating %d %s profiles...", len(arrValue), siteKey))
+	}
+
+	// write all profiles to json file
+	allProfilesFile, marshallErr := json.MarshalIndent(profiles, "", " ")
+	if marshallErr != nil {
+		fmt.Println(marshallErr)
+		return
+	}
+	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_FootSite_Profiles.json")
+	allProfilesWriteFileErr := ioutil.WriteFile(allProfilesPath, allProfilesFile, 0644)
+	if allProfilesWriteFileErr != nil {
+		fmt.Println(allProfilesWriteFileErr)
+		return
+	}
+	numOfExports++
+
+	fmt.Println()
+	fmt.Println(fmt.Sprintf("%d profiles created...", profilesCreated))
+	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))
+	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
+}
+
+func createProfiles() {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {
 		fmt.Println(jsonFilErr)
@@ -120,4 +219,12 @@ func main() {
 	fmt.Println(fmt.Sprintf("%d profiles created...", len(virutalCreditCardInformation))) // number of profiles created
 	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))                // number of exported profiles
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
+}
+
+func main() {
+	// create all profiles
+	// createProfiles()
+
+	// create only footsite profiles
+	createFootSiteProfiles()
 }

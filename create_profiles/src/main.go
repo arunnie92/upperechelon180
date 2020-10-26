@@ -26,7 +26,7 @@ func createFootSiteProfiles() {
 		fmt.Println(unmarshalErr)
 		return
 	}
-	fmt.Println("Successfully uploaded virutal credit card information...")
+	fmt.Println("Successfully ingested virutal credit card information...")
 
 	fmt.Println("Creating profiles...")
 
@@ -115,7 +115,7 @@ func createProfiles() {
 		fmt.Println(unmarshalErr)
 		return
 	}
-	fmt.Println("Successfully uploaded virutal credit card information...")
+	fmt.Println("Successfully ingested virutal credit card information...")
 
 	fmt.Println("Creating profiles...")
 

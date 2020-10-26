@@ -96,6 +96,9 @@ func createFootSiteProfiles() {
 	fmt.Println(fmt.Sprintf("%d profiles created...", profilesCreated))
 	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
+
+	fmt.Println()
+	utils.CreateAndExportPhantomProlfileManager(profiles)
 }
 
 func createProfiles() {
@@ -194,6 +197,9 @@ func createProfiles() {
 	fmt.Println(fmt.Sprintf("%d profiles created...", len(virutalCreditCardInformation))) // number of profiles created
 	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))                // number of exported profiles
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
+
+	// TODO: create ProfileManager, but is this need since this creates all profiles for all sites?
+	// this may not be need becuase the sku is different from all sites, exxcept footsites
 }
 
 func main() {

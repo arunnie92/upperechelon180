@@ -8,6 +8,9 @@ const VirutalCreditCardPath = absolutePath + "/upperechelon180/create_profiles/d
 // ProfilesPath | path to export all profiles
 const ProfilesPath = absolutePath + "/profiles"
 
+// ProfileManagerPath | absolute path to export Phantom Profile Manager
+const ProfileManagerPath = "/Users/arunnie92/Library/ApplicationSupport/Phantom/ProfileManager.json"
+
 // LastName | last name of profile
 const LastName = "chanthirakanthan"
 

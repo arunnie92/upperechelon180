@@ -36,4 +36,4 @@ fs.writeFileSync(
     return;
   }
 );
-console.log("Successully exported all virtual cards...");
+console.log("Successfully exported all virtual cards...");

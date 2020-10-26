@@ -7,7 +7,6 @@ next todo:
     each profile is different, different name and/or address from each other for each site, based on phantom documentation
 - create CREATE TASKS script
     think this through, this is a big change and requires the prior todo to be finished first
-= create ProfileManager.json
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings

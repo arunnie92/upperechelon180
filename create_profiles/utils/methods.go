@@ -148,8 +148,8 @@ func IsFootSite(site string) bool {
 }
 
 // ExportProfiles | exports profiles to json file
-func ExportProfiles(exportPath string, profileArr []Profile) error {
-	file, marshallErr := json.MarshalIndent(profileArr, "", " ")
+func ExportProfiles(exportPath string, profiles interface{}) error {
+	file, marshallErr := json.MarshalIndent(profiles, "", " ")
 	if marshallErr != nil {
 		fmt.Println(marshallErr)
 		return marshallErr
@@ -162,4 +162,20 @@ func ExportProfiles(exportPath string, profileArr []Profile) error {
 	}
 
 	return nil
+}
+
+// CreateAndExportPhantomProlfileManager | creates and export profile manager
+func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
+	fmt.Println(fmt.Sprintf("Creating Phantom's ProfileManager.json"))
+
+	profileMap := make(map[string]Profile)
+
+	for _, profile := range profileArr {
+		profileMap[profile.Name] = profile
+	}
+
+	// TODO: the map isn't ordered the way the profile array is read, why?
+	ExportProfiles(ProfileManagerPath, profileMap)
+
+	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))
 }

@@ -101,7 +101,7 @@ func createFootSiteProfiles() {
 	utils.CreateAndExportPhantomProlfileManager(profiles)
 }
 
-func createProfiles() {
+func createAllProfiles() {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {
 		fmt.Println(jsonFilErr)
@@ -198,13 +198,13 @@ func createProfiles() {
 	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))                // number of exported profiles
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
 
-	// TODO: create ProfileManager, but is this need since this creates all profiles for all sites?
-	// this may not be need becuase the sku is different from all sites, exxcept footsites
+	fmt.Println()
+	utils.CreateAndExportPhantomProlfileManager(profiles)
 }
 
 func main() {
 	// create all profiles
-	// createProfiles()
+	// createAllProfiles()
 
 	// create only footsite profiles
 	createFootSiteProfiles()

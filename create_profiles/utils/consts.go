@@ -17,7 +17,7 @@ const LastName = "chanthirakanthan"
 // FirstName | first name of profile
 const FirstName = "arunn"
 
-// FullNameMap | keeps track of used full names for profiles 
+// FullNameMap | keeps track of used full names for profiles
 var FullNameMap = make(map[string]bool)
 
 // Address | first line of address
@@ -48,7 +48,7 @@ const footAction = "FootAction"
 const champsSports = "ChampsSports"
 const eastbay = "Eastbay"
 
-// FootSites | array of foot sites
+// FootSitesArr | array of foot sites
 var FootSitesArr = []string{footLocker, footAction, champsSports, eastbay}
 
 // FootSitesMap | mp of foot sitres

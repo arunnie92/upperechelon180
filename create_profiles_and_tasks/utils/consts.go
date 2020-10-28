@@ -3,10 +3,16 @@ package utils
 const absolutePath = "/Users/arunnie92/Documents/upper_echelon_180"
 
 // VirutalCreditCardPath | path of virutal credit card data
-const VirutalCreditCardPath = absolutePath + "/upperechelon180/create_profiles/data/eno.json"
+const VirutalCreditCardPath = absolutePath + "/upperechelon180/create_profiles_and_tasks/data/eno.json"
 
 // ProfilesPath | path to export all profiles
 const ProfilesPath = absolutePath + "/profiles"
+
+// ProfileManagerPath | absolute path to export Phantom Profile Manager
+const ProfileManagerPath = "/Users/arunnie92/Library/ApplicationSupport/Phantom/ProfileManager.json"
+
+// TasksPath | path to export tasks
+const TasksPath = absolutePath + "/tasks"
 
 // LastName | last name of profile
 const LastName = "chanthirakanthan"
@@ -55,3 +61,8 @@ var FootSitesMap = map[string]bool{
 	champsSports: true,
 	eastbay:      true,
 }
+
+// objects used in Tasks
+const size = "R"
+const checkoutModeNone = "none"
+const captchaSourceLocal = "local"

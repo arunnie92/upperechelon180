@@ -147,9 +147,9 @@ func IsFootSite(site string) bool {
 	return FootSitesMap[site]
 }
 
-// ExportProfiles | exports profiles to json file
-func ExportProfiles(exportPath string, profileArr []Profile) error {
-	file, marshallErr := json.MarshalIndent(profileArr, "", " ")
+// ExportJSON | exports data to json file
+func ExportJSON(exportPath string, data interface{}) error {
+	file, marshallErr := json.MarshalIndent(data, "", " ")
 	if marshallErr != nil {
 		fmt.Println(marshallErr)
 		return marshallErr
@@ -162,4 +162,41 @@ func ExportProfiles(exportPath string, profileArr []Profile) error {
 	}
 
 	return nil
+}
+
+// CreateAndExportPhantomProlfileManager | creates and export profile manager
+func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
+	fmt.Println(fmt.Sprintf("Creating Phantom's ProfileManager.json"))
+
+	profileMap := make(map[string]Profile)
+
+	for _, profile := range profileArr {
+		profileMap[profile.Name] = profile
+	}
+
+	// TODO: the map isn't ordered the way the profile array is read, why?
+	ExportJSON(ProfileManagerPath, profileMap)
+
+	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))
+}
+
+// CreateTask | initializes and creates a task for a site
+func CreateTask(site, profileName, sku, proxyListName string) Task {
+	return Task{
+		URL:            sku,
+		Size:           size,
+		Proxy:          "",
+		Profile:        profileName,
+		Site:           site,
+		RandomEmail:    true,
+		Desktop:        false,
+		CheckoutMode:   checkoutModeNone,
+		CaptchaSource:  captchaSourceLocal,
+		CartQuantity:   "",
+		ProxyList:      proxyListName,
+		ManualCheckout: false,
+		RepeatCheckout: false,
+		MaxPrice:       "",
+		PaypalCheckout: false,
+	}
 }

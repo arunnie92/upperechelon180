@@ -35,3 +35,22 @@ type Profile struct {
 	Name     string  `json:"Name"`     // Name | name of profile
 	Country  string  `json:"Country"`  // Country | country of address
 }
+
+// Task | task used at checkout
+type Task struct {
+	URL            string `json:"URL"`
+	Size           string `json:"Size"`
+	Proxy          string `json:"Proxy"`
+	Profile        string `json:"Profile"`
+	Site           string `json:"Site"`
+	RandomEmail    bool   `json:"randomEmail"`
+	Desktop        bool   `json:"Desktop"`
+	CheckoutMode   string `json:"checkoutMode"`
+	CaptchaSource  string `json:"captchaSource"`
+	CartQuantity   string `json:"cartQuantity"`
+	ProxyList      string `json:"proxyList"`
+	ManualCheckout bool   `json:"manualCheckout"`
+	RepeatCheckout bool   `json:"repeatCheckout"`
+	MaxPrice       string `json:"maxPrice"`
+	PaypalCheckout bool   `json:"paypalCheckout"`
+}

@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 
 	"../utils"
 )
 
-func createFootSiteProfiles() {
+func createFootSiteProfiles() ([]utils.Profile, error) {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {
 		fmt.Println(jsonFilErr)
-		return
+		return nil, jsonFilErr
 	}
 	defer jsonFile.Close()
 
@@ -24,7 +25,7 @@ func createFootSiteProfiles() {
 	unmarshalErr := json.Unmarshal(byteValue, &virutalCreditCardInformation)
 	if unmarshalErr != nil {
 		fmt.Println(unmarshalErr)
-		return
+		return nil, unmarshalErr
 	}
 	fmt.Println("Successfully uploaded virutal credit card information...")
 
@@ -72,10 +73,10 @@ func createFootSiteProfiles() {
 	for siteKey, profileArr := range profileMap {
 		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
 
-		exportProfilesErr := utils.ExportProfiles(exportPath, profileArr)
+		exportProfilesErr := utils.ExportJSON(exportPath, profileArr)
 		if exportProfilesErr != nil {
 			fmt.Println(exportProfilesErr)
-			return
+			return nil, exportProfilesErr
 		}
 
 		numOfExports++
@@ -85,10 +86,10 @@ func createFootSiteProfiles() {
 
 	// write all profiles to json file
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_FootSite_Profiles.json")
-	exportAllProfilesErr := utils.ExportProfiles(allProfilesPath, profiles)
+	exportAllProfilesErr := utils.ExportJSON(allProfilesPath, profiles)
 	if exportAllProfilesErr != nil {
 		fmt.Println(exportAllProfilesErr)
-		return
+		return nil, exportAllProfilesErr
 	}
 	numOfExports++
 
@@ -96,6 +97,44 @@ func createFootSiteProfiles() {
 	fmt.Println(fmt.Sprintf("%d profiles created...", profilesCreated))
 	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
+
+	fmt.Println()
+	utils.CreateAndExportPhantomProlfileManager(profiles)
+
+	return profiles, nil
+}
+
+func createFootSiteTasks(sku string) {
+	profiles, createFootSiteProfilesErr := createFootSiteProfiles()
+	if createFootSiteProfilesErr != nil {
+		fmt.Println(createFootSiteProfilesErr)
+		return
+	}
+
+	proxyListName := "proxy_list" // TODO: figure this out
+
+	fmt.Println("")
+	fmt.Println("Creating tasks...")
+	tasks := []utils.Task{}
+	for _, profile := range profiles {
+		site := strings.Split(profile.Name, "_")[2]
+
+		for i := 0; i < 5; i++ {
+			newTask := utils.CreateTask(site, profile.Name, sku, proxyListName)
+
+			tasks = append(tasks, newTask)
+		}
+	}
+	fmt.Println(fmt.Sprintf("%d task created...", len(tasks)))
+
+	allTasksPath := fmt.Sprintf("%s/%s", utils.TasksPath, "tasks.json")
+	exportAllTasksErr := utils.ExportJSON(allTasksPath, tasks)
+	if exportAllTasksErr != nil {
+		fmt.Println(exportAllTasksErr)
+		return
+	}
+
+	fmt.Println("All tasks have been exported...")
 }
 
 func createProfiles() {
@@ -161,7 +200,7 @@ func createProfiles() {
 	for siteKey, profileArr := range profileMap {
 		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
 
-		exportProfilesErr := utils.ExportProfiles(exportPath, profileArr)
+		exportProfilesErr := utils.ExportJSON(exportPath, profileArr)
 		if exportProfilesErr != nil {
 			fmt.Println(exportProfilesErr)
 			return
@@ -174,7 +213,7 @@ func createProfiles() {
 
 	// write all profiles to json file
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_Profiles.json")
-	exportAllProfilesErr := utils.ExportProfiles(allProfilesPath, profiles)
+	exportAllProfilesErr := utils.ExportJSON(allProfilesPath, profiles)
 	if exportAllProfilesErr != nil {
 		fmt.Println(exportAllProfilesErr)
 		return
@@ -183,7 +222,7 @@ func createProfiles() {
 
 	// write only foot site profiles to json file
 	footSiteProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "FootSite_Profiles.json")
-	exportFootSiteProfilesErr := utils.ExportProfiles(footSiteProfilesPath, footSiteProfilesArr)
+	exportFootSiteProfilesErr := utils.ExportJSON(footSiteProfilesPath, footSiteProfilesArr)
 	if exportFootSiteProfilesErr != nil {
 		fmt.Println(exportFootSiteProfilesErr)
 		return
@@ -197,9 +236,6 @@ func createProfiles() {
 }
 
 func main() {
-	// create all profiles
-	// createProfiles()
-
 	// create only footsite profiles
-	createFootSiteProfiles()
+	createFootSiteTasks("sku")
 }

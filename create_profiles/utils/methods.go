@@ -137,8 +137,8 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 	profile.Email = CreateRandomEmail(firstName, lastName)
 
 	// Setup Profile Name
-	profile.Name = fmt.Sprintf("Profile_%d_%s", index, site)
-
+	profile.Name = fmt.Sprintf("Profile_%03d_%s", index, site)
+	
 	return profile
 }
 
@@ -174,7 +174,6 @@ func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
 		profileMap[profile.Name] = profile
 	}
 
-	// TODO: the map isn't ordered the way the profile array is read, why?
 	ExportProfiles(ProfileManagerPath, profileMap)
 
 	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))

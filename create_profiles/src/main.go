@@ -72,7 +72,7 @@ func createFootSiteProfiles() {
 	for siteKey, profileArr := range profileMap {
 		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
 
-		exportProfilesErr := utils.ExportProfiles(exportPath, profileArr)
+		exportProfilesErr := utils.ExportData(exportPath, profileArr)
 		if exportProfilesErr != nil {
 			fmt.Println(exportProfilesErr)
 			return
@@ -85,7 +85,7 @@ func createFootSiteProfiles() {
 
 	// write all profiles to json file
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_FootSite_Profiles.json")
-	exportAllProfilesErr := utils.ExportProfiles(allProfilesPath, profiles)
+	exportAllProfilesErr := utils.ExportData(allProfilesPath, profiles)
 	if exportAllProfilesErr != nil {
 		fmt.Println(exportAllProfilesErr)
 		return
@@ -164,7 +164,7 @@ func createAllProfiles() {
 	for siteKey, profileArr := range profileMap {
 		exportPath := fmt.Sprintf("%s/_%s_Profiles.json", utils.ProfilesPath, siteKey)
 
-		exportProfilesErr := utils.ExportProfiles(exportPath, profileArr)
+		exportProfilesErr := utils.ExportData(exportPath, profileArr)
 		if exportProfilesErr != nil {
 			fmt.Println(exportProfilesErr)
 			return
@@ -177,7 +177,7 @@ func createAllProfiles() {
 
 	// write all profiles to json file
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_Profiles.json")
-	exportAllProfilesErr := utils.ExportProfiles(allProfilesPath, profiles)
+	exportAllProfilesErr := utils.ExportData(allProfilesPath, profiles)
 	if exportAllProfilesErr != nil {
 		fmt.Println(exportAllProfilesErr)
 		return
@@ -186,7 +186,7 @@ func createAllProfiles() {
 
 	// write only foot site profiles to json file
 	footSiteProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "FootSite_Profiles.json")
-	exportFootSiteProfilesErr := utils.ExportProfiles(footSiteProfilesPath, footSiteProfilesArr)
+	exportFootSiteProfilesErr := utils.ExportData(footSiteProfilesPath, footSiteProfilesArr)
 	if exportFootSiteProfilesErr != nil {
 		fmt.Println(exportFootSiteProfilesErr)
 		return

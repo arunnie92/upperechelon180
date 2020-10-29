@@ -138,7 +138,7 @@ func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
 
 	// Setup Profile Name
 	profile.Name = fmt.Sprintf("Profile_%03d_%s", index, site)
-	
+
 	return profile
 }
 
@@ -147,17 +147,15 @@ func IsFootSite(site string) bool {
 	return FootSitesMap[site]
 }
 
-// ExportProfiles | exports profiles to json file
-func ExportProfiles(exportPath string, profiles interface{}) error {
-	file, marshallErr := json.MarshalIndent(profiles, "", " ")
+// ExportData | exports data to json file
+func ExportData(exportPath string, data interface{}) error {
+	file, marshallErr := json.MarshalIndent(data, "", " ")
 	if marshallErr != nil {
-		fmt.Println(marshallErr)
 		return marshallErr
 	}
 
 	writeFileErr := ioutil.WriteFile(exportPath, file, 0644)
 	if writeFileErr != nil {
-		fmt.Println(writeFileErr)
 		return writeFileErr
 	}
 
@@ -174,7 +172,7 @@ func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
 		profileMap[profile.Name] = profile
 	}
 
-	ExportProfiles(ProfileManagerPath, profileMap)
+	ExportData(ProfileManagerPath, profileMap)
 
 	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))
 }

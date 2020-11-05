@@ -10,7 +10,7 @@ import (
 )
 
 func createFootSiteProfiles() ([]utils.Profile, error) {
-	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
+	jsonFile, jsonFilErr := os.Open(utils.VirtualCreditCardPath)
 	if jsonFilErr != nil {
 		return nil, jsonFilErr
 	}
@@ -18,25 +18,25 @@ func createFootSiteProfiles() ([]utils.Profile, error) {
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	var virutalCreditCardInformation []utils.VirutalCCInfo
+	var virtualCreditCardInformation []utils.VirtualCCInfo
 
-	unmarshalErr := json.Unmarshal(byteValue, &virutalCreditCardInformation)
+	unmarshalErr := json.Unmarshal(byteValue, &virtualCreditCardInformation)
 	if unmarshalErr != nil {
 		return nil, unmarshalErr
 	}
-	fmt.Println("Successfully ingested virutal credit card information...")
+	fmt.Println("Successfully ingested virtual credit card information...")
 
 	fmt.Println("Creating profiles...")
 
 	profiles := []utils.Profile{}
 	profileMap := make(map[string][]utils.Profile)
 
-	previousSite := virutalCreditCardInformation[0].Site
+	previousSite := virtualCreditCardInformation[0].Site
 
 	profilesCreated := 0
 
-	for index, virutalCard := range virutalCreditCardInformation {
-		currentSite := virutalCard.Site
+	for index, virtualCard := range virtualCreditCardInformation {
+		currentSite := virtualCard.Site
 
 		if !utils.FootSitesMap[currentSite] {
 			continue
@@ -45,10 +45,10 @@ func createFootSiteProfiles() ([]utils.Profile, error) {
 		// instantiate map again from reusing full name
 		if currentSite != previousSite {
 			utils.FullNameMap = make(map[string]bool)
-			previousSite = virutalCard.Site
+			previousSite = virtualCard.Site
 		}
 
-		newProfile := utils.CreateProfile(virutalCard, index)
+		newProfile := utils.CreateProfile(virtualCard, index)
 
 		arr := []utils.Profile{}
 
@@ -100,7 +100,7 @@ func createFootSiteProfiles() ([]utils.Profile, error) {
 }
 
 func createAllProfiles() {
-	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
+	jsonFile, jsonFilErr := os.Open(utils.VirtualCreditCardPath)
 	if jsonFilErr != nil {
 		fmt.Println(jsonFilErr)
 		return
@@ -109,14 +109,14 @@ func createAllProfiles() {
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
-	var virutalCreditCardInformation []utils.VirutalCCInfo
+	var virtualCreditCardInformation []utils.VirtualCCInfo
 
-	unmarshalErr := json.Unmarshal(byteValue, &virutalCreditCardInformation)
+	unmarshalErr := json.Unmarshal(byteValue, &virtualCreditCardInformation)
 	if unmarshalErr != nil {
 		fmt.Println(unmarshalErr)
 		return
 	}
-	fmt.Println("Successfully ingested virutal credit card information...")
+	fmt.Println("Successfully ingested virtual credit card information...")
 
 	fmt.Println("Creating profiles...")
 
@@ -125,18 +125,18 @@ func createAllProfiles() {
 
 	footSiteProfilesArr := []utils.Profile{}
 
-	previousSite := virutalCreditCardInformation[0].Site
+	previousSite := virtualCreditCardInformation[0].Site
 
-	for index, virutalCard := range virutalCreditCardInformation {
-		currentSite := virutalCard.Site
+	for index, virtualCard := range virtualCreditCardInformation {
+		currentSite := virtualCard.Site
 
 		// instantiate map again from reusing full name
 		if currentSite != previousSite {
 			utils.FullNameMap = make(map[string]bool)
-			previousSite = virutalCard.Site
+			previousSite = virtualCard.Site
 		}
 
-		newProfile := utils.CreateProfile(virutalCard, index)
+		newProfile := utils.CreateProfile(virtualCard, index)
 
 		arr := []utils.Profile{}
 
@@ -192,7 +192,7 @@ func createAllProfiles() {
 	numOfExports++
 
 	fmt.Println()
-	fmt.Println(fmt.Sprintf("%d profiles created...", len(virutalCreditCardInformation))) // number of profiles created
+	fmt.Println(fmt.Sprintf("%d profiles created...", len(virtualCreditCardInformation))) // number of profiles created
 	fmt.Println(fmt.Sprintf("%d exported profile files...", numOfExports))                // number of exported profiles
 	fmt.Println(fmt.Sprintf("Finished creating profiles..."))
 

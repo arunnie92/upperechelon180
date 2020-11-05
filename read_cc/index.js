@@ -3,34 +3,34 @@ const xlsx = require("xlsx");
 const consts = require("./utils/consts");
 
 console.log("Reading excel workbook...");
-const workbook = xlsx.readFile(consts.virutalCardWorkbookPath);
+const workbook = xlsx.readFile(consts.virtualCardWorkbookPath);
 console.log("Successfully imported excel workbook...");
 
-const virutalCardInformation = [];
+const virtualCardInformation = [];
 const sheetNames = workbook.SheetNames;
 
 for (var sheetNameIndex in sheetNames) {
   const sheetName = sheetNames[sheetNameIndex];
   const worksheet = workbook.Sheets[sheetName];
 
-  const virutalCards = xlsx.utils.sheet_to_json(worksheet);
+  const virtualCards = xlsx.utils.sheet_to_json(worksheet);
 
-  for (var virtualCardIndex in virutalCards) {
-    const virutal_card = virutalCards[virtualCardIndex];
-    const removed_whitespace_number = virutal_card.CCNumber.replace(/ /g, "");
+  for (var virtualCardIndex in virtualCards) {
+    const virtual_card = virtualCards[virtualCardIndex];
+    const removed_whitespace_number = virtual_card.CCNumber.replace(/ /g, "");
 
-    virutal_card.CCNumber = removed_whitespace_number;
-    virutal_card.Site = sheetName;
+    virtual_card.CCNumber = removed_whitespace_number;
+    virtual_card.Site = sheetName;
 
-    virutalCardInformation.push(virutal_card);
+    virtualCardInformation.push(virtual_card);
   }
 
-  console.log(`Successfully imported ${sheetName} virutal cards...`);
+  console.log(`Successfully imported ${sheetName} virtual cards...`);
 }
 
 fs.writeFileSync(
   consts.exportPath,
-  JSON.stringify(virutalCardInformation, null, 2),
+  JSON.stringify(virtualCardInformation, null, 2),
   (err) => {
     console.log(err);
     return;

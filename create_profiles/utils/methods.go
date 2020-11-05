@@ -76,7 +76,7 @@ func GetFootSite(num int) string {
 }
 
 // CreateProfile | returns a newly created profile based on an index and virtual card information
-func CreateProfile(virtualCreditCard VirutalCCInfo, index int) Profile {
+func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	var profile Profile
 
 	//////////////////////////////////////////////

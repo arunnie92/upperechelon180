@@ -10,9 +10,9 @@ next todo:
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings
-    - if virutal card info object is empty then dont create profile
+    - if virtual card info object is empty then dont create profile
     - really make CreateAddress random usuing all letters of alphabet and digits 0-9
-    - clear byte[] of virutal credit card after profiles created?
+    - clear byte[] of virtual credit card after profiles created?
     - add rules while injesting
         e.g. only have specific strings, strings must be of certain length (anything else or more should error)
     - create ui 

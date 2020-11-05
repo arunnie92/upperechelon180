@@ -9,11 +9,10 @@ import (
 	"../utils"
 )
 
-func createFootSiteProfiles() {
+func createFootSiteProfiles() ([]utils.Profile, error) {
 	jsonFile, jsonFilErr := os.Open(utils.VirutalCreditCardPath)
 	if jsonFilErr != nil {
-		fmt.Println(jsonFilErr)
-		return
+		return nil, jsonFilErr
 	}
 	defer jsonFile.Close()
 
@@ -23,8 +22,7 @@ func createFootSiteProfiles() {
 
 	unmarshalErr := json.Unmarshal(byteValue, &virutalCreditCardInformation)
 	if unmarshalErr != nil {
-		fmt.Println(unmarshalErr)
-		return
+		return nil, unmarshalErr
 	}
 	fmt.Println("Successfully ingested virutal credit card information...")
 
@@ -74,8 +72,7 @@ func createFootSiteProfiles() {
 
 		exportProfilesErr := utils.ExportData(exportPath, profileArr)
 		if exportProfilesErr != nil {
-			fmt.Println(exportProfilesErr)
-			return
+			return nil, exportProfilesErr
 		}
 
 		numOfExports++
@@ -87,8 +84,7 @@ func createFootSiteProfiles() {
 	allProfilesPath := fmt.Sprintf("%s/%s", utils.ProfilesPath, "All_FootSite_Profiles.json")
 	exportAllProfilesErr := utils.ExportData(allProfilesPath, profiles)
 	if exportAllProfilesErr != nil {
-		fmt.Println(exportAllProfilesErr)
-		return
+		return nil, exportAllProfilesErr
 	}
 	numOfExports++
 
@@ -99,6 +95,8 @@ func createFootSiteProfiles() {
 
 	fmt.Println()
 	utils.CreateAndExportPhantomProlfileManager(profiles)
+
+	return profiles, nil
 }
 
 func createAllProfiles() {
@@ -207,5 +205,13 @@ func main() {
 	// createAllProfiles()
 
 	// create only footsite profiles
-	createFootSiteProfiles()
+	footSiteProfiles, footSiteProfilesErr := createFootSiteProfiles()
+	if footSiteProfilesErr != nil {
+		fmt.Println(footSiteProfilesErr)
+		return
+	}
+
+	fmt.Println()
+
+	utils.CreateAndExportTasks("", footSiteProfiles)
 }

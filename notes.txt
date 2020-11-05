@@ -24,3 +24,4 @@ backlog:
     - what does the data look like for Phantom notification settings
     - add other sites
     - the problem creating manipulating MY full name, how many premutations of my name? 4 X 16 = 64?
+    - should sku be passed in as a flag?

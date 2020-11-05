@@ -176,3 +176,60 @@ func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
 
 	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))
 }
+
+// CreateTask | initializes and creates a single task
+func CreateTask(sku, site, profileName string, paypal bool) Task {
+	return Task{
+		URL:            sku,
+		Size:           "R",
+		Proxy:          "",
+		Profile:        profileName,
+		Site:           site,
+		RandomEmail:    true,
+		Desktop:        false,
+		CheckoutMode:   "none",
+		CaptchaSource:  "local",
+		CartQuantity:   "",
+		ProxyList:      "MochaPL",
+		ManualCheckout: false,
+		RepeatCheckout: false,
+		MaxPrice:       "",
+		PaypalCheckout: paypal,
+	}
+}
+
+// CreateAndExportTasks | creates 5 tasks per profile and exports all created tasks for specific sku
+func CreateAndExportTasks(sku string, profiles []Profile) {
+	if len(sku) == 0 {
+		fmt.Println("sku can not be empty")
+		return
+	}
+
+	fmt.Println(fmt.Sprintf("Creating tasks for %s", sku))
+
+	tasks := []Task{}
+
+	for _, profile := range profiles {
+		site := strings.Split(profile.Name, "_")[2]
+
+		// TODO: Should I make all paypals?
+		for i := 0; i < 3; i++ {
+			task := CreateTask(sku, site, profile.Name, true)
+			tasks = append(tasks, task)
+		}
+		for i := 0; i < 2; i++ {
+			task := CreateTask(sku, site, profile.Name, false)
+			tasks = append(tasks, task)
+		}
+
+	}
+
+	tasksPath := fmt.Sprintf("%s/%s_tasks.json", absolutePath, sku)
+	exportTasksErr := ExportData(tasksPath, tasks)
+	if exportTasksErr != nil {
+		fmt.Println(exportTasksErr)
+		return
+	}
+
+	fmt.Println(fmt.Sprintf("Created and exported all %d tasks for sku %s", len(tasks), sku))
+}

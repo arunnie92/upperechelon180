@@ -41,6 +41,8 @@ const Country = "US"
 const domain = "upperechelon180.com"
 
 const bestBuy = "BestBuy"
+const walmart = "Walmart"
+
 const yeezySupply = "YeezySupply"
 const adidas = "AdidasUS"
 const footLocker = "FootLockerUS"
@@ -51,7 +53,7 @@ const eastbay = "Eastbay"
 // FootSitesArr | array of foot sites
 var FootSitesArr = []string{footLocker, footAction, champsSports, eastbay}
 
-// FootSitesMap | mp of foot sitres
+// FootSitesMap | map of foot sitres
 var FootSitesMap = map[string]bool{
 	footLocker:   true,
 	footAction:   true,

@@ -185,7 +185,7 @@ func CreateTask(sku, site, profileName string, paypal bool) Task {
 		Proxy:          "",
 		Profile:        profileName,
 		Site:           site,
-		RandomEmail:    true,
+		RandomEmail:    true, // TODO: Is this actually using a random  eamil or the one I create?
 		Desktop:        false,
 		CheckoutMode:   "none",
 		CaptchaSource:  "local",
@@ -196,6 +196,23 @@ func CreateTask(sku, site, profileName string, paypal bool) Task {
 		MaxPrice:       "",
 		PaypalCheckout: paypal,
 	}
+}
+
+// CreateFiveTasks | creates five tasks
+func CreateFiveTasks(sku, site, profileName string) []Task {
+	tasks := []Task{}
+
+	// TODO: Should I make all paypals?
+	for i := 0; i < 3; i++ {
+		task := CreateTask(sku, site, profileName, true)
+		tasks = append(tasks, task)
+	}
+	for i := 0; i < 2; i++ {
+		task := CreateTask(sku, site, profileName, false)
+		tasks = append(tasks, task)
+	}
+
+	return tasks
 }
 
 // CreateAndExportTasks | creates 5 tasks per profile and exports all created tasks for specific sku
@@ -212,16 +229,19 @@ func CreateAndExportTasks(sku string, profiles []Profile) {
 	for _, profile := range profiles {
 		site := strings.Split(profile.Name, "_")[2]
 
-		// TODO: Should I make all paypals?
-		for i := 0; i < 3; i++ {
-			task := CreateTask(sku, site, profile.Name, true)
-			tasks = append(tasks, task)
-		}
-		for i := 0; i < 2; i++ {
-			task := CreateTask(sku, site, profile.Name, false)
-			tasks = append(tasks, task)
+		if strings.Compare(site, All) == 0 {
+			for footSiteKey := range FootSitesMap {
+				if strings.Compare(footSiteKey, All) == 0 {
+					continue
+				}
+				newFiveTasks := CreateFiveTasks(sku, footSiteKey, profile.Name)
+				tasks = append(tasks, newFiveTasks...)
+			}
+			continue
 		}
 
+		newFiveTasks := CreateFiveTasks(sku, site, profile.Name)
+		tasks = append(tasks, newFiveTasks...)
 	}
 
 	tasksPath := fmt.Sprintf("%s/%s_tasks.json", absolutePath, sku)

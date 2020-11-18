@@ -50,6 +50,9 @@ const footAction = "FootAction"
 const champsSports = "ChampsSports"
 const eastbay = "Eastbay"
 
+// All | "All" keyword with virutal card information that works for every site
+const All = "All"
+
 // FootSitesArr | array of foot sites
 var FootSitesArr = []string{footLocker, footAction, champsSports, eastbay}
 
@@ -59,4 +62,5 @@ var FootSitesMap = map[string]bool{
 	footAction:   true,
 	champsSports: true,
 	eastbay:      true,
+	All:          true,
 }

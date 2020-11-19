@@ -40,27 +40,21 @@ const Country = "US"
 
 const domain = "upperechelon180.com"
 
-const bestBuy = "BestBuy"
-const walmart = "Walmart"
+const bestBuy = "BestBuy"           // site keyword
+const walmart = "Walmart"           // site keyword
+const yeezySupply = "YeezySupply"   // site keyword
+const adidas = "AdidasUS"           // site keyword
+const footLocker = "FootLockerUS"   // site keyword
+const footAction = "FootAction"     // site keyword
+const champsSports = "ChampsSports" // site keyword
+const eastbay = "Eastbay"           // site keyword
+const all = "All"                   // site keyword to use for all sites
 
-const yeezySupply = "YeezySupply"
-const adidas = "AdidasUS"
-const footLocker = "FootLockerUS"
-const footAction = "FootAction"
-const champsSports = "ChampsSports"
-const eastbay = "Eastbay"
-
-// All | "All" keyword with virutal card information that works for every site
-const All = "All"
-
-// FootSitesArr | array of foot sites
-var FootSitesArr = []string{footLocker, footAction, champsSports, eastbay}
-
-// FootSitesMap | map of foot sitres
-var FootSitesMap = map[string]bool{
+// SiteMap | map of sites
+var SiteMap = map[string]bool{
 	footLocker:   true,
 	footAction:   true,
 	champsSports: true,
 	eastbay:      true,
-	All:          true,
+	all:          true,
 }

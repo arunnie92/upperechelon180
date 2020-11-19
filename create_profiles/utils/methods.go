@@ -70,11 +70,6 @@ func CreateAddress(address string) string {
 	return fmt.Sprintf("%s %s%s%s", address, alpha[index], numeric[index], alpha[index])
 }
 
-// GetFootSite | returns foot site based on input
-func GetFootSite(num int) string {
-	return FootSitesArr[num%len(FootSitesArr)]
-}
-
 // CreateProfile | returns a newly created profile based on an index and virtual card information
 func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	var profile Profile
@@ -144,7 +139,7 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 // IsFootSite | checks if the site a foot site
 func IsFootSite(site string) bool {
-	return FootSitesMap[site]
+	return SiteMap[site]
 }
 
 // ExportData | exports data to json file
@@ -229,9 +224,9 @@ func CreateAndExportTasks(sku string, profiles []Profile) {
 	for _, profile := range profiles {
 		site := strings.Split(profile.Name, "_")[2]
 
-		if strings.Compare(site, All) == 0 {
-			for footSiteKey := range FootSitesMap {
-				if strings.Compare(footSiteKey, All) == 0 {
+		if strings.Compare(site, all) == 0 {
+			for footSiteKey := range SiteMap {
+				if strings.Compare(footSiteKey, all) == 0 {
 					continue
 				}
 				newFiveTasks := CreateFiveTasks(sku, footSiteKey, profile.Name)

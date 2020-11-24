@@ -180,12 +180,12 @@ func CreateTask(sku, site, profileName string, paypal bool) Task {
 		Proxy:          "",
 		Profile:        profileName,
 		Site:           site,
-		RandomEmail:    true, // TODO: Is this actually using a random  eamil or the one I create?
+		RandomEmail:    true, // TODO: Is this actually using a random email or the one I create?
 		Desktop:        false,
 		CheckoutMode:   "none",
 		CaptchaSource:  "local",
 		CartQuantity:   "",
-		ProxyList:      "MochaPL",
+		ProxyList:      "ProxyList",
 		ManualCheckout: false,
 		RepeatCheckout: false,
 		MaxPrice:       "",
@@ -202,49 +202,52 @@ func CreateFiveTasks(sku, site, profileName string) []Task {
 		task := CreateTask(sku, site, profileName, true)
 		tasks = append(tasks, task)
 	}
+
 	for i := 0; i < 2; i++ {
 		task := CreateTask(sku, site, profileName, false)
 		tasks = append(tasks, task)
 	}
-
 	return tasks
 }
 
-// CreateAndExportTasks | creates 5 tasks per profile and exports all created tasks for specific sku
-func CreateAndExportTasks(sku string, profiles []Profile) {
-	if len(sku) == 0 {
+// CreateAndExportTasks | creates 5 tasks per profile and exports all created tasks per sku
+func CreateAndExportTasks(skus []string, profiles []Profile) {
+	if len(skus) == 0 {
 		fmt.Println("sku can not be empty")
 		return
 	}
 
-	fmt.Println(fmt.Sprintf("Creating tasks for %s", sku))
-
 	tasks := []Task{}
 
-	for _, profile := range profiles {
-		site := strings.Split(profile.Name, "_")[2]
+	for _, sku := range skus {
+		fmt.Println(fmt.Sprintf("Creating tasks for %s", sku))
 
-		if strings.Compare(site, all) == 0 {
-			for footSiteKey := range SiteMap {
-				if strings.Compare(footSiteKey, all) == 0 {
-					continue
+		for _, profile := range profiles {
+			site := strings.Split(profile.Name, "_")[2]
+
+			if strings.Compare(site, all) == 0 {
+				for siteKey := range SiteMap {
+					if strings.Compare(siteKey, all) == 0 {
+						continue
+					}
+
+					newFiveTasks := CreateFiveTasks(sku, siteKey, profile.Name)
+					tasks = append(tasks, newFiveTasks...)
 				}
-				newFiveTasks := CreateFiveTasks(sku, footSiteKey, profile.Name)
-				tasks = append(tasks, newFiveTasks...)
+				continue
 			}
-			continue
-		}
 
-		newFiveTasks := CreateFiveTasks(sku, site, profile.Name)
-		tasks = append(tasks, newFiveTasks...)
+			newFiveTasks := CreateFiveTasks(sku, site, profile.Name)
+			tasks = append(tasks, newFiveTasks...)
+		}
 	}
 
-	tasksPath := fmt.Sprintf("%s/%s_tasks.json", absolutePath, sku)
+	tasksPath := fmt.Sprintf("%s/master_tasks.json", absolutePath)
 	exportTasksErr := ExportData(tasksPath, tasks)
 	if exportTasksErr != nil {
 		fmt.Println(exportTasksErr)
 		return
 	}
 
-	fmt.Println(fmt.Sprintf("Created and exported all %d tasks for sku %s", len(tasks), sku))
+	fmt.Println(fmt.Sprintf("Created and exported all %d tasks", len(tasks)))
 }

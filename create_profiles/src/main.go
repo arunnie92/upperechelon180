@@ -113,5 +113,10 @@ func main() {
 
 	fmt.Println()
 
-	utils.CreateAndExportTasks("1", profiles)
+	skus := []string{
+		"",
+		"",
+	}
+
+	utils.CreateAndExportTasks(skus, profiles)
 }

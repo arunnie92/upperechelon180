@@ -8,6 +8,7 @@ type VirtualCCInfo struct {
 	ExpYear  string `json:"ExpYear"`  // ExpYear | expiration year of credit card
 	CardType string `json:"CardType"` // CardType | type of credit card for payment
 	Site     string `json:"Site"`     // Site | the site the credit card belongs too
+	IsVeer   bool   `json:"IsVeer"`   // IsVeer | checks is veer's card or not
 }
 
 type address struct {

@@ -10,6 +10,7 @@ next todo:
     - create profiles should ask which site you want to create a profile for
         - this same flag should create tasks, each task is different for each site
 - create tasks for a list of SKUs/URLs for each profile
+- add veers information and create his profiles
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings

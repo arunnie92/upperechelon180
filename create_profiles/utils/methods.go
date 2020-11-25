@@ -118,7 +118,7 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
-	if strings.Compare(site, bestBuy) == 0 {
+	if site == bestBuy {
 		randomdata.FirstName(randomdata.Male)
 		randomdata.LastName()
 	}
@@ -225,9 +225,9 @@ func CreateAndExportTasks(skus []string, profiles []Profile) {
 		for _, profile := range profiles {
 			site := strings.Split(profile.Name, "_")[2]
 
-			if strings.Compare(site, all) == 0 {
+			if site == all {
 				for siteKey := range SiteMap {
-					if strings.Compare(siteKey, all) == 0 {
+					if siteKey == all {
 						continue
 					}
 

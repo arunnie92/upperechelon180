@@ -35,7 +35,9 @@ func createProfiles() ([]utils.Profile, error) {
 
 	profilesCreated := 0
 
-	for index, virtualCard := range virtualCreditCardInformation {
+	index := 0
+
+	for _, virtualCard := range virtualCreditCardInformation {
 		if virtualCard.IsVeer {
 			continue
 		}
@@ -68,6 +70,7 @@ func createProfiles() ([]utils.Profile, error) {
 		profiles = append(profiles, newProfile)
 
 		profilesCreated++
+		index++
 	}
 
 	numOfExports := 0
@@ -108,7 +111,6 @@ func main() {
 	 * TODO: MAKE SURE YOU UPDATE utils.SiteMap BEFORE YOU RUN SCRIPT
 	 **/
 
-	// create only footsite profiles
 	profiles, profilesErr := createProfiles()
 	if profilesErr != nil {
 		fmt.Println(profilesErr)
@@ -118,8 +120,7 @@ func main() {
 	fmt.Println()
 
 	skus := []string{
-		"",
-		"",
+		"url",
 	}
 
 	utils.CreateAndExportTasks(skus, profiles)

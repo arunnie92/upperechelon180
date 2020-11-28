@@ -1,0 +1,18 @@
+[
+  {
+    "URL": "url",
+    "Size": "R",
+    "Proxy": "",
+    "Profile": "Profile_000_FootLockerUS",
+    "Site": "Walmart",
+    "randomEmail": true,
+    "checkoutMode": "none",
+    "captchaSource": "local",
+    "cartQuantity": "1",
+    "proxyList": "ProxyList",
+    "manualCheckout": false,
+    "repeatCheckout": false,
+    "maxPrice": "",
+    "paypalCheckout": false
+  }
+]

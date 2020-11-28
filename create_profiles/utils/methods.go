@@ -137,11 +137,6 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	return profile
 }
 
-// IsFootSite | checks if the site a foot site
-func IsFootSite(site string) bool {
-	return SiteMap[site]
-}
-
 // ExportData | exports data to json file
 func ExportData(exportPath string, data interface{}) error {
 	file, marshallErr := json.MarshalIndent(data, "", " ")
@@ -172,6 +167,26 @@ func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
 	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))
 }
 
+// CreateWalmartTask | initializes and creates a single task for Walmart
+func CreateWalmartTask(sku, profileName string) Task {
+	return Task{
+		URL:            sku,
+		Size:           "R",
+		Proxy:          "",
+		Profile:        profileName,
+		Site:           walmart,
+		RandomEmail:    true, // TODO: Is this actually using a random email or the one I create?
+		CheckoutMode:   "none",
+		CaptchaSource:  "local",
+		CartQuantity:   "1",
+		ProxyList:      "ProxyList",
+		ManualCheckout: false,
+		RepeatCheckout: false,
+		MaxPrice:       "",
+		PaypalCheckout: false,
+	}
+}
+
 // CreateTask | initializes and creates a single task
 func CreateTask(sku, site, profileName string, paypal bool) Task {
 	return Task{
@@ -197,16 +212,24 @@ func CreateTask(sku, site, profileName string, paypal bool) Task {
 func CreateFiveTasks(sku, site, profileName string) []Task {
 	tasks := []Task{}
 
-	// TODO: Should I make all paypals?
-	for i := 0; i < 3; i++ {
-		task := CreateTask(sku, site, profileName, true)
-		tasks = append(tasks, task)
+	if site == walmart {
+		for i := 0; i < 5; i++ {
+			task := CreateWalmartTask(sku, profileName)
+			tasks = append(tasks, task)
+		}
+	} else {
+		// TODO: Should I make all paypals?
+		for i := 0; i < 3; i++ {
+			task := CreateTask(sku, site, profileName, true)
+			tasks = append(tasks, task)
+		}
+
+		for i := 0; i < 2; i++ {
+			task := CreateTask(sku, site, profileName, false)
+			tasks = append(tasks, task)
+		}
 	}
 
-	for i := 0; i < 2; i++ {
-		task := CreateTask(sku, site, profileName, false)
-		tasks = append(tasks, task)
-	}
 	return tasks
 }
 

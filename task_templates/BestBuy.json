@@ -1,0 +1,18 @@
+[
+  {
+    "URL": "sku",
+    "Size": "R",
+    "Proxy": "",
+    "Profile": "Profile_000_Walmart",
+    "Site": "BestBuy",
+    "randomEmail": true,
+    "checkoutMode": "advanced",
+    "captchaSource": "local",
+    "cartQuantity": "",
+    "proxyList": "ProxyList",
+    "manualCheckout": false,
+    "repeatCheckout": false,
+    "maxPrice": "",
+    "paypalCheckout": false
+  }
+]

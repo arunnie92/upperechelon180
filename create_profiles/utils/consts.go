@@ -58,3 +58,19 @@ var SiteMap = map[string]bool{
 	eastbay:      true,
 	all:          true,
 }
+
+// FootSiteMap | map of foot sites
+var FootSiteMap = map[string]bool{
+	footLocker:   true,
+	footAction:   true,
+	champsSports: true,
+	eastbay:      true,
+}
+
+// NonFootSiteMap | map of non foot sites
+var NonFootSiteMap = map[string]bool{
+	adidas:      true,
+	yeezySupply: true,
+	bestBuy:     true,
+	walmart:     true,
+}

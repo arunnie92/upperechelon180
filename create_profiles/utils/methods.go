@@ -167,8 +167,8 @@ func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
 	fmt.Println(fmt.Sprintf("Exported Phantom's ProfileManager.json"))
 }
 
-// CreateWalmartTask | initializes and creates a single task for Walmart
-func CreateWalmartTask(sku, profileName string) Task {
+// CreateNonFootSiteTask | initializes and creates a single task for non foot sites
+func CreateNonFootSiteTask(sku, profileName string) Task {
 	return Task{
 		URL:            sku,
 		Size:           "R",
@@ -187,8 +187,8 @@ func CreateWalmartTask(sku, profileName string) Task {
 	}
 }
 
-// CreateTask | initializes and creates a single task
-func CreateTask(sku, site, profileName string, paypal bool) Task {
+// CreateFootSiteTask | initializes and creates a single task for a foot site
+func CreateFootSiteTask(sku, site, profileName string, paypal bool) Task {
 	return Task{
 		URL:            sku,
 		Size:           "R",
@@ -212,20 +212,24 @@ func CreateTask(sku, site, profileName string, paypal bool) Task {
 func CreateFiveTasks(sku, site, profileName string) []Task {
 	tasks := []Task{}
 
-	if site == walmart {
-		for i := 0; i < 5; i++ {
-			task := CreateWalmartTask(sku, profileName)
-			tasks = append(tasks, task)
-		}
-	} else {
+	if FootSiteMap[site] {
 		// TODO: Should I make all paypals?
 		for i := 0; i < 3; i++ {
-			task := CreateTask(sku, site, profileName, true)
+			task := CreateFootSiteTask(sku, site, profileName, true)
 			tasks = append(tasks, task)
 		}
 
 		for i := 0; i < 2; i++ {
-			task := CreateTask(sku, site, profileName, false)
+			task := CreateFootSiteTask(sku, site, profileName, false)
+			tasks = append(tasks, task)
+		}
+
+		return tasks
+	}
+
+	if NonFootSiteMap[site] {
+		for i := 0; i < 5; i++ {
+			task := CreateNonFootSiteTask(sku, profileName)
 			tasks = append(tasks, task)
 		}
 	}

@@ -44,7 +44,23 @@ func ManipulateName(name string) string {
 }
 
 // ManipulateFullName | Manipulates full name and keeps track of used names
-func ManipulateFullName() (string, string) {
+func ManipulateFullName(isVeersName bool) (string, string) {
+	if isVeersName {
+		firstName := ManipulateName(VeerFirstName)
+		lastName := ManipulateName(VeerLastName)
+	
+		fullName := fmt.Sprintf("%s %s", firstName, lastName)
+	
+		nameExists := FullNameMap[fullName]
+	
+		if !nameExists {
+			FullNameMap[fullName] = true
+			return firstName, lastName
+		}
+	
+		return ManipulateFullName(isVeersName)
+	}
+
 	firstName := ManipulateName(FirstName)
 	lastName := ManipulateName(LastName)
 
@@ -57,17 +73,19 @@ func ManipulateFullName() (string, string) {
 		return firstName, lastName
 	}
 
-	return ManipulateFullName()
+	return ManipulateFullName(isVeersName)
 }
 
 // CreateAddress creates an address with a concatenated alphanumerica value
 func CreateAddress(address string) string {
-	numeric := []string{"0", "1", "2"}
-	alpha := []string{"A", "B", "C"}
+	numeric := []string{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}
+	alpha := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
 
-	index := RandomIndex(0, 3)
+	indexZero := RandomIndex(0, 10)
+	indexOne := RandomIndex(0, 10)
+	indexTwo := RandomIndex(0, 10)
 
-	return fmt.Sprintf("%s %s%s%s", address, alpha[index], numeric[index], alpha[index])
+	return fmt.Sprintf("%s %s%s%s", address, alpha[indexZero], numeric[indexOne], alpha[indexTwo])
 }
 
 // CreateProfile | returns a newly created profile based on an index and virtual card information
@@ -113,7 +131,68 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Country = Country
 
 	// Setup First Name & Last Name
-	firstName, lastName := ManipulateFullName()
+	firstName, lastName := ManipulateFullName(false)
+	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
+
+	// TODO: create rules function based on what site the profile is being used
+	site := virtualCreditCard.Site
+	if site == bestBuy {
+		randomdata.FirstName(randomdata.Male)
+		randomdata.LastName()
+	}
+
+	profile.Shipping.FirstName = firstName
+	profile.Shipping.LastName = lastName
+	profile.Billing.FirstName = firstName
+	profile.Billing.LastName = lastName
+
+	// Setup Email
+	profile.Email = CreateRandomEmail(firstName, lastName)
+
+	// Setup Profile Name
+	profile.Name = fmt.Sprintf("Profile_%03d_%s", index, site)
+
+	return profile
+}
+
+// CreateVeerProfile | returns a newly created profile based on an index and virtual card information for Veer
+func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
+	var profile Profile
+
+	// Setup Credit Card Information
+	profile.CCNumber = virtualCreditCard.CCNumber
+	profile.CVV = virtualCreditCard.CVV
+	profile.ExpMonth = virtualCreditCard.ExpMonth
+	profile.ExpYear = virtualCreditCard.ExpYear
+	profile.CardType = virtualCreditCard.CardType
+
+	// Setup Phone Number
+	profile.Phone = CreateRandomPhoneNumber()
+	if len(profile.Phone) != 10 {
+		fmt.Println(fmt.Sprintf("wrong number at %s", profile.Name))
+	}
+
+	// Setup Address
+	profile.Same = true
+
+	veerAddress := CreateAddress(VeerAddress)
+
+	profile.Shipping.Address = veerAddress
+	profile.Shipping.Apt = VeerApt
+	profile.Shipping.City = VeerCity
+	profile.Shipping.State = VeerState
+	profile.Shipping.Zip = VeerZip
+
+	profile.Billing.Address = veerAddress
+	profile.Billing.Apt = VeerApt
+	profile.Billing.City = VeerCity
+	profile.Billing.State = VeerState
+	profile.Billing.Zip = VeerZip
+
+	profile.Country = Country
+
+	// Setup First Name & Last Name
+	firstName, lastName := ManipulateFullName(true)
 	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
 
 	// TODO: create rules function based on what site the profile is being used

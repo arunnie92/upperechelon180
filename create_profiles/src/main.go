@@ -38,10 +38,6 @@ func createProfiles() ([]utils.Profile, error) {
 	index := 0
 
 	for _, virtualCard := range virtualCreditCardInformation {
-		if virtualCard.IsVeer {
-			continue
-		}
-
 		currentSite := virtualCard.Site
 
 		if !utils.SiteMap[currentSite] {
@@ -54,7 +50,13 @@ func createProfiles() ([]utils.Profile, error) {
 			previousSite = virtualCard.Site
 		}
 
-		newProfile := utils.CreateProfile(virtualCard, index)
+		var newProfile utils.Profile
+
+		if virtualCard.IsVeer {
+			newProfile = utils.CreateVeerProfile(virtualCard, index)
+		} else {
+			newProfile = utils.CreateProfile(virtualCard, index)
+		}
 
 		arr := []utils.Profile{}
 

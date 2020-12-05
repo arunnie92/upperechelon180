@@ -7,8 +7,6 @@ import (
 	"math/rand"
 	"os"
 	"strings"
-
-	"github.com/Pallinder/go-randomdata"
 )
 
 // CreateRandomEmail creates random email based on two strings
@@ -137,9 +135,9 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
-	if site == bestBuy {
-		randomdata.FirstName(randomdata.Male)
-		randomdata.LastName()
+	// NOTE: Citi Cards work for all
+	if site == all {
+		// TODO: ADD specific site for Citi Virutal Cards
 	}
 
 	profile.Shipping.FirstName = firstName
@@ -198,9 +196,9 @@ func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
-	if site == bestBuy {
-		randomdata.FirstName(randomdata.Male)
-		randomdata.LastName()
+	// NOTE: Citi Cards work for all
+	if site == all {
+		// TODO: ADD specific site for Citi Virutal Cards
 	}
 
 	profile.Shipping.FirstName = firstName

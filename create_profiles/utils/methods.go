@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"os"
 	"strings"
 
 	"github.com/Pallinder/go-randomdata"
@@ -48,16 +49,16 @@ func ManipulateFullName(isVeersName bool) (string, string) {
 	if isVeersName {
 		firstName := ManipulateName(VeerFirstName)
 		lastName := ManipulateName(VeerLastName)
-	
+
 		fullName := fmt.Sprintf("%s %s", firstName, lastName)
-	
+
 		nameExists := FullNameMap[fullName]
-	
+
 		if !nameExists {
 			FullNameMap[fullName] = true
 			return firstName, lastName
 		}
-	
+
 		return ManipulateFullName(isVeersName)
 	}
 
@@ -356,4 +357,24 @@ func CreateAndExportTasks(skus []string, profiles []Profile) {
 	}
 
 	fmt.Println(fmt.Sprintf("Created and exported all %d tasks", len(tasks)))
+}
+
+// ReadProfilesFromJSON | read json profiles
+func ReadProfilesFromJSON(path string) ([]Profile, error) {
+	jsonFile, jsonFilErr := os.Open(path)
+	if jsonFilErr != nil {
+		return nil, jsonFilErr
+	}
+	defer jsonFile.Close()
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+
+	var profiles []Profile
+
+	unmarshalErr := json.Unmarshal(byteValue, &profiles)
+	if unmarshalErr != nil {
+		return nil, unmarshalErr
+	}
+
+	return profiles, nil
 }

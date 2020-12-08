@@ -39,11 +39,11 @@ type Profile struct {
 
 // Task | task used at checkout
 type Task struct {
-	URL            string `json:"URL"`
 	Size           string `json:"Size"`
 	Proxy          string `json:"Proxy"`
 	Profile        string `json:"Profile"`
 	Site           string `json:"Site"`
+	URL            string `json:"URL"`
 	RandomEmail    bool   `json:"randomEmail"`
 	Desktop        bool   `json:"Desktop"`
 	CheckoutMode   string `json:"checkoutMode"`

@@ -11,6 +11,7 @@ next todo:
         - this same flag should create tasks, each task is different for each site
 - create tasks for a list of SKUs/URLs for each profile
 - add veers information and create his profiles
+- some footsites, and other sites, will have different skus, create site to sku map to build proper tasks
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings

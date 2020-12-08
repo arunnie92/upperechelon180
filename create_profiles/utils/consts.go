@@ -40,38 +40,43 @@ const Country = "US"
 
 const domain = "upperechelon180.com"
 
-const bestBuy = "BestBuy"           // site keyword
-const walmart = "Walmart"           // site keyword
-const yeezySupply = "YeezySupply"   // site keyword
-const adidas = "AdidasUS"           // site keyword
-const footLocker = "FootLockerUS"   // site keyword
-const footAction = "FootAction"     // site keyword
-const champsSports = "ChampsSports" // site keyword
-const eastbay = "Eastbay"           // site keyword
-const all = "All"                   // site keyword to use for all sites
+const bestBuy = "BestBuy" // site keyword
+const walmart = "Walmart" // site keyword
+
+// YeezySupply | site keyword
+const YeezySupply = "YeezySupply"
+
+const adidas = "AdidasUS" // site keyword
+
+// FootLocker | site keyword
+const FootLocker = "FootLockerUS"
+
+// FootAction | site keyword
+const FootAction = "FootAction"
+
+// ChampsSports | site keyword
+const ChampsSports = "ChampsSports"
+
+// Eastbay | site keyword
+const Eastbay = "Eastbay"
+
+const All = "All" // site keyword to use for all sites
 
 // SiteMap | map of sites
-var SiteMap = map[string]bool{
-	yeezySupply:  true,
-	adidas:       true,
-	footLocker:   true,
-	footAction:   true,
-	champsSports: true,
-	eastbay:      true,
-}
+var SiteMap = make(map[string]bool)
 
 // FootSiteMap | map of foot sites
 var FootSiteMap = map[string]bool{
-	footLocker:   true,
-	footAction:   true,
-	champsSports: true,
-	eastbay:      true,
+	FootLocker:   true,
+	FootAction:   true,
+	ChampsSports: true,
+	Eastbay:      true,
 }
 
 // NonFootSiteMap | map of non foot sites
 var NonFootSiteMap = map[string]bool{
 	adidas:      true,
-	yeezySupply: true,
+	YeezySupply: true,
 	bestBuy:     true,
 	walmart:     true,
 }

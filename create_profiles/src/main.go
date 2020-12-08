@@ -112,6 +112,13 @@ func main() {
 	/**
 	 * TODO: MAKE SURE YOU UPDATE utils.SiteMap BEFORE YOU RUN SCRIPT
 	 **/
+	utils.SiteMap = map[string]bool{
+		utils.FootLocker:   true,
+		utils.FootAction:   true,
+		utils.ChampsSports: true,
+		utils.Eastbay:      true,
+		utils.All:         true,
+	}
 
 	profiles, profilesErr := createProfiles()
 	if profilesErr != nil {
@@ -121,6 +128,9 @@ func main() {
 
 	fmt.Println()
 
+	/**
+	 * TODO: ADD SKUS BEFORE YOU RUN SCRIPT
+	 */
 	skus := []string{
 		"url",
 	}

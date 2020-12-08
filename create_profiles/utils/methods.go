@@ -136,8 +136,9 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
 	// NOTE: Citi Cards work for all
-	if site == all {
+	if site == All {
 		// TODO: ADD specific site for Citi Virutal Cards
+		site = "Site"
 	}
 
 	profile.Shipping.FirstName = firstName
@@ -196,10 +197,6 @@ func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	// TODO: create rules function based on what site the profile is being used
 	site := virtualCreditCard.Site
-	// NOTE: Citi Cards work for all
-	if site == all {
-		// TODO: ADD specific site for Citi Virutal Cards
-	}
 
 	profile.Shipping.FirstName = firstName
 	profile.Shipping.LastName = lastName
@@ -246,13 +243,13 @@ func CreateAndExportPhantomProlfileManager(profileArr []Profile) {
 }
 
 // CreateNonFootSiteTask | initializes and creates a single task for non foot sites
-func CreateNonFootSiteTask(sku, profileName string) Task {
+func CreateNonFootSiteTask(sku, site, profileName string) Task {
 	return Task{
-		URL:            sku,
 		Size:           "R",
 		Proxy:          "",
 		Profile:        profileName,
-		Site:           walmart,
+		Site:           site,
+		URL:            sku,
 		RandomEmail:    true, // TODO: Is this actually using a random email or the one I create?
 		CheckoutMode:   "none",
 		CaptchaSource:  "local",
@@ -292,22 +289,15 @@ func CreateFiveTasks(sku, site, profileName string) []Task {
 
 	if FootSiteMap[site] {
 		// TODO: Should I make all paypals?
-		for i := 0; i < 3; i++ {
-			task := CreateFootSiteTask(sku, site, profileName, true)
-			tasks = append(tasks, task)
-		}
-
-		for i := 0; i < 2; i++ {
+		for i := 0; i < 5; i++ {
 			task := CreateFootSiteTask(sku, site, profileName, false)
 			tasks = append(tasks, task)
 		}
-
-		return tasks
 	}
 
 	if NonFootSiteMap[site] {
 		for i := 0; i < 5; i++ {
-			task := CreateNonFootSiteTask(sku, profileName)
+			task := CreateNonFootSiteTask(sku, site, profileName)
 			tasks = append(tasks, task)
 		}
 	}
@@ -329,18 +319,6 @@ func CreateAndExportTasks(skus []string, profiles []Profile) {
 
 		for _, profile := range profiles {
 			site := strings.Split(profile.Name, "_")[2]
-
-			if site == all {
-				for siteKey := range SiteMap {
-					if siteKey == all {
-						continue
-					}
-
-					newFiveTasks := CreateFiveTasks(sku, siteKey, profile.Name)
-					tasks = append(tasks, newFiveTasks...)
-				}
-				continue
-			}
 
 			newFiveTasks := CreateFiveTasks(sku, site, profile.Name)
 			tasks = append(tasks, newFiveTasks...)

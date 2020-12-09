@@ -306,22 +306,24 @@ func CreateFiveTasks(sku, site, profileName string) []Task {
 }
 
 // CreateAndExportTasks | creates 5 tasks per profile and exports all created tasks per sku
-func CreateAndExportTasks(skus []string, profiles []Profile) {
-	if len(skus) == 0 {
+func CreateAndExportTasks(siteSkuMap map[string]string, profiles []Profile) {
+	if len(siteSkuMap) == 0 {
 		fmt.Println("sku can not be empty")
 		return
 	}
 
 	tasks := []Task{}
 
-	for _, sku := range skus {
-		fmt.Println(fmt.Sprintf("Creating tasks for %s", sku))
+	for siteKey, skuValue := range siteSkuMap {
+		fmt.Println(fmt.Sprintf("Creating tasks for sku %s for site %s", skuValue, siteKey))
 
 		for _, profile := range profiles {
-			site := strings.Split(profile.Name, "_")[2]
+			profileSite := strings.Split(profile.Name, "_")[2]
 
-			newFiveTasks := CreateFiveTasks(sku, site, profile.Name)
-			tasks = append(tasks, newFiveTasks...)
+			if profileSite == siteKey {
+				newFiveTasks := CreateFiveTasks(skuValue, profileSite, profile.Name)
+				tasks = append(tasks, newFiveTasks...)
+			}
 		}
 	}
 

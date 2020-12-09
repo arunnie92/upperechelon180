@@ -117,7 +117,7 @@ func main() {
 		utils.FootAction:   true,
 		utils.ChampsSports: true,
 		utils.Eastbay:      true,
-		utils.All:         true,
+		utils.All:          true,
 	}
 
 	profiles, profilesErr := createProfiles()
@@ -131,9 +131,12 @@ func main() {
 	/**
 	 * TODO: ADD SKUS BEFORE YOU RUN SCRIPT
 	 */
-	skus := []string{
-		"url",
+	skus := map[string]string{
+		utils.FootLocker:   "1",
+		utils.FootAction:   "2",
+		utils.ChampsSports: "3",
+		utils.Eastbay:      "2",
+		utils.All:          "4",
 	}
-
 	utils.CreateAndExportTasks(skus, profiles)
 }

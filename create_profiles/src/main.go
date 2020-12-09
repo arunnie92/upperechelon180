@@ -9,7 +9,7 @@ import (
 	"../utils"
 )
 
-func createProfiles() ([]utils.Profile, error) {
+func createProfiles(useJustVeer, useBoth bool) ([]utils.Profile, error) {
 	jsonFile, jsonFilErr := os.Open(utils.VirtualCreditCardPath)
 	if jsonFilErr != nil {
 		return nil, jsonFilErr
@@ -52,10 +52,20 @@ func createProfiles() ([]utils.Profile, error) {
 
 		var newProfile utils.Profile
 
-		if virtualCard.IsVeer {
-			newProfile = utils.CreateVeerProfile(virtualCard, index)
+		if useBoth {
+			if virtualCard.IsVeer {
+				newProfile = utils.CreateVeerProfile(virtualCard, index)
+			} else {
+				newProfile = utils.CreateProfile(virtualCard, index)
+			}
+		} else if useJustVeer {
+			if virtualCard.IsVeer {
+				newProfile = utils.CreateVeerProfile(virtualCard, index)
+			}
 		} else {
-			newProfile = utils.CreateProfile(virtualCard, index)
+			if !virtualCard.IsVeer {
+				newProfile = utils.CreateProfile(virtualCard, index)
+			}
 		}
 
 		arr := []utils.Profile{}
@@ -120,7 +130,10 @@ func main() {
 		utils.All:          true,
 	}
 
-	profiles, profilesErr := createProfiles()
+	useJustVeer := true
+	useBoth := true
+
+	profiles, profilesErr := createProfiles(useJustVeer, useBoth)
 	if profilesErr != nil {
 		fmt.Println(profilesErr)
 		return

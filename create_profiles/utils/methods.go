@@ -207,7 +207,7 @@ func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Email = CreateRandomEmail(firstName, lastName)
 
 	// Setup Profile Name
-	profile.Name = fmt.Sprintf("Profile_%03d_%s", index, site)
+	profile.Name = fmt.Sprintf("Veer_Profile_%03d_%s", index, site)
 
 	return profile
 }

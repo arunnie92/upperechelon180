@@ -69,7 +69,19 @@ func ManipulateVeerFullName(isCharlesSchwab bool) (string, string) {
 		firstName = KushFirstName
 	}
 
-	return firstName, lastName
+	firstName = ManipulateName(firstName)
+	lastName = ManipulateName(lastName)
+
+	fullName := fmt.Sprintf("%s %s", firstName, lastName)
+
+	nameExists := FullNameMap[fullName]
+
+	if !nameExists {
+		FullNameMap[fullName] = true
+		return firstName, lastName
+	}
+
+	return ManipulateVeerFullName(isCharlesSchwab)
 }
 
 // CreateAddress creates an address with a concatenated alphanumerica value
@@ -147,7 +159,7 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Email = CreateRandomEmail(firstName, lastName)
 
 	// Setup Profile Name
-	profile.Name = fmt.Sprintf("Arunn_Profile_%03d_%s", index, site)
+	profile.Name = fmt.Sprintf("Profile_%03d_Arunn_%s", index, site)
 
 	return profile
 }
@@ -210,9 +222,9 @@ func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	// Setup Profile Name
 	if virtualCreditCard.CardCompany == charlesSchwab {
-		profile.Name = fmt.Sprintf("Veer_Profile_%03d_%s", index, site)
+		profile.Name = fmt.Sprintf("Profile_%03d_Veer_%s", index, site)
 	} else {
-		profile.Name = fmt.Sprintf("Kush_Profile_%03d_%s", index, site)
+		profile.Name = fmt.Sprintf("Profile_%03d_Kush_%s", index, site)
 	}
 
 	return profile

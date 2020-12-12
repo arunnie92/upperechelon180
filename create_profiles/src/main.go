@@ -9,7 +9,7 @@ import (
 	"../utils"
 )
 
-func createProfiles(useJustVeer, useBoth bool) ([]utils.Profile, error) {
+func createProfiles(useVeer, useArunn bool) ([]utils.Profile, error) {
 	jsonFile, jsonFilErr := os.Open(utils.VirtualCreditCardPath)
 	if jsonFilErr != nil {
 		return nil, jsonFilErr
@@ -52,13 +52,13 @@ func createProfiles(useJustVeer, useBoth bool) ([]utils.Profile, error) {
 
 		var newProfile utils.Profile
 
-		if useBoth {
+		if useArunn && useVeer {
 			if virtualCard.IsVeer {
 				newProfile = utils.CreateVeerProfile(virtualCard, index)
 			} else {
 				newProfile = utils.CreateProfile(virtualCard, index)
 			}
-		} else if useJustVeer {
+		} else if useVeer {
 			if virtualCard.IsVeer {
 				newProfile = utils.CreateVeerProfile(virtualCard, index)
 			}
@@ -68,21 +68,24 @@ func createProfiles(useJustVeer, useBoth bool) ([]utils.Profile, error) {
 			}
 		}
 
-		arr := []utils.Profile{}
+		// TODO: is the a better way to check if a profile has been created?
+		if len(newProfile.Name) > 0 {
+			arr := []utils.Profile{}
 
-		if profileMap[currentSite] == nil {
-			arr = append(arr, newProfile)
-		} else {
-			arr = profileMap[currentSite]
-			arr = append(arr, newProfile)
+			if profileMap[currentSite] == nil {
+				arr = append(arr, newProfile)
+			} else {
+				arr = profileMap[currentSite]
+				arr = append(arr, newProfile)
+			}
+
+			profileMap[currentSite] = arr
+
+			profiles = append(profiles, newProfile)
+
+			profilesCreated++
+			index++
 		}
-
-		profileMap[currentSite] = arr
-
-		profiles = append(profiles, newProfile)
-
-		profilesCreated++
-		index++
 	}
 
 	numOfExports := 0
@@ -127,13 +130,12 @@ func main() {
 		utils.FootAction:   true,
 		utils.ChampsSports: true,
 		utils.Eastbay:      true,
-		utils.All:          true,
 	}
 
-	useJustVeer := true
-	useBoth := true
+	useVeer := true
+	useArunn := false
 
-	profiles, profilesErr := createProfiles(useJustVeer, useBoth)
+	profiles, profilesErr := createProfiles(useVeer, useArunn)
 	if profilesErr != nil {
 		fmt.Println(profilesErr)
 		return
@@ -149,7 +151,6 @@ func main() {
 		utils.FootAction:   "2",
 		utils.ChampsSports: "3",
 		utils.Eastbay:      "2",
-		utils.All:          "4",
 	}
 	utils.CreateAndExportTasks(skus, profiles)
 }

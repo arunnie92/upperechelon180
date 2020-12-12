@@ -43,23 +43,7 @@ func ManipulateName(name string) string {
 }
 
 // ManipulateFullName | Manipulates full name and keeps track of used names
-func ManipulateFullName(isVeersName bool) (string, string) {
-	if isVeersName {
-		firstName := ManipulateName(VeerFirstName)
-		lastName := ManipulateName(VeerLastName)
-
-		fullName := fmt.Sprintf("%s %s", firstName, lastName)
-
-		nameExists := FullNameMap[fullName]
-
-		if !nameExists {
-			FullNameMap[fullName] = true
-			return firstName, lastName
-		}
-
-		return ManipulateFullName(isVeersName)
-	}
-
+func ManipulateFullName() (string, string) {
 	firstName := ManipulateName(FirstName)
 	lastName := ManipulateName(LastName)
 
@@ -72,7 +56,20 @@ func ManipulateFullName(isVeersName bool) (string, string) {
 		return firstName, lastName
 	}
 
-	return ManipulateFullName(isVeersName)
+	return ManipulateFullName()
+}
+
+// ManipulateVeerFullName | Manipulates veers and kush name and keeps track of used names
+func ManipulateVeerFullName(isCharlesSchwab bool) (string, string) {
+	// TODO: FIX THIS there are more cards than number of manipulations
+	firstName := VeerFirstName
+	lastName := VeerLastName
+
+	if isCharlesSchwab {
+		firstName = KushFirstName
+	}
+
+	return firstName, lastName
 }
 
 // CreateAddress creates an address with a concatenated alphanumerica value
@@ -130,7 +127,7 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Country = Country
 
 	// Setup First Name & Last Name
-	firstName, lastName := ManipulateFullName(false)
+	firstName, lastName := ManipulateFullName()
 	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
 
 	// TODO: create rules function based on what site the profile is being used
@@ -150,7 +147,7 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Email = CreateRandomEmail(firstName, lastName)
 
 	// Setup Profile Name
-	profile.Name = fmt.Sprintf("Profile_%03d_%s", index, site)
+	profile.Name = fmt.Sprintf("Arunn_Profile_%03d_%s", index, site)
 
 	return profile
 }
@@ -191,8 +188,13 @@ func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	profile.Country = Country
 
+	isCharlesSchwab := false
+	if virtualCreditCard.CardCompany == charlesSchwab {
+		isCharlesSchwab = true
+	}
+
 	// Setup First Name & Last Name
-	firstName, lastName := ManipulateFullName(true)
+	firstName, lastName := ManipulateVeerFullName(isCharlesSchwab)
 	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
 
 	// TODO: create rules function based on what site the profile is being used
@@ -207,7 +209,11 @@ func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Email = CreateRandomEmail(firstName, lastName)
 
 	// Setup Profile Name
-	profile.Name = fmt.Sprintf("Veer_Profile_%03d_%s", index, site)
+	if virtualCreditCard.CardCompany == charlesSchwab {
+		profile.Name = fmt.Sprintf("Veer_Profile_%03d_%s", index, site)
+	} else {
+		profile.Name = fmt.Sprintf("Kush_Profile_%03d_%s", index, site)
+	}
 
 	return profile
 }
@@ -318,7 +324,7 @@ func CreateAndExportTasks(siteSkuMap map[string]string, profiles []Profile) {
 		fmt.Println(fmt.Sprintf("Creating tasks for sku %s for site %s", skuValue, siteKey))
 
 		for _, profile := range profiles {
-			profileSite := strings.Split(profile.Name, "_")[2]
+			profileSite := strings.Split(profile.Name, "_")[3]
 
 			if profileSite == siteKey {
 				newFiveTasks := CreateFiveTasks(skuValue, profileSite, profile.Name)

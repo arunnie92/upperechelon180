@@ -2,13 +2,14 @@ package utils
 
 // VirtualCCInfo | Store credit card information
 type VirtualCCInfo struct {
-	CCNumber string `json:"CCNumber"` // CCNumber | 16 digit credit card number
-	CVV      string `json:"CVV"`      // CVV | 3 digit secruity code for credit card
-	ExpMonth string `json:"ExpMonth"` // ExpMonth | expirtation month of credit card
-	ExpYear  string `json:"ExpYear"`  // ExpYear | expiration year of credit card
-	CardType string `json:"CardType"` // CardType | type of credit card for payment
-	Site     string `json:"Site"`     // Site | the site the credit card belongs too
-	IsVeer   bool   `json:"IsVeer"`   // IsVeer | checks is veer's card or not
+	CCNumber    string `json:"CCNumber"`    // CCNumber | 16 digit credit card number
+	CVV         string `json:"CVV"`         // CVV | 3 digit secruity code for credit card
+	ExpMonth    string `json:"ExpMonth"`    // ExpMonth | expirtation month of credit card
+	ExpYear     string `json:"ExpYear"`     // ExpYear | expiration year of credit card
+	CardType    string `json:"CardType"`    // CardType | type of credit card for payment
+	Site        string `json:"Site"`        // Site | the site the credit card belongs too
+	IsVeer      bool   `json:"IsVeer"`      // IsVeer | checks is veer's card or not
+	CardCompany string `json:"CardCompany"` // CardCompany | Card company
 }
 
 type address struct {

@@ -88,6 +88,9 @@ var NonFootSiteMap = map[string]bool{
 // VeerLastName | Veer's last name
 const VeerLastName = "patel"
 
+// KushFirstName | Kush's first name
+const KushFirstName = "kush"
+
 // VeerFirstName | Veer's first name
 const VeerFirstName = "veer"
 
@@ -105,3 +108,5 @@ const VeerState = "PA"
 
 // VeerZip | Veer's zipcode address
 const VeerZip = "19121"
+
+const charlesSchwab = "CharlesSchwab"

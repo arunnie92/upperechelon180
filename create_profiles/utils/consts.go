@@ -60,7 +60,8 @@ const ChampsSports = "ChampsSports"
 // Eastbay | site keyword
 const Eastbay = "Eastbay"
 
-const All = "All" // site keyword to use for all sites
+// All | keyword to use for 'all' citi virutal cards for a specified site
+const All = "All"
 
 // SiteMap | map of sites
 var SiteMap = make(map[string]bool)

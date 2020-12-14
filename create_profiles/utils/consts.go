@@ -81,6 +81,9 @@ var NonFootSiteMap = map[string]bool{
 	walmart:     true,
 }
 
+// Skus | map of sites
+var Skus = make(map[string]string)
+
 /*
  * Veer's Information
  */

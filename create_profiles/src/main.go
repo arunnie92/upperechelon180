@@ -9,6 +9,9 @@ import (
 	"../utils"
 )
 
+var useVeer bool
+var useArunn bool
+
 func createProfiles(useVeer, useArunn bool) ([]utils.Profile, error) {
 	jsonFile, jsonFilErr := os.Open(utils.VirtualCreditCardPath)
 	if jsonFilErr != nil {
@@ -121,10 +124,8 @@ func createProfiles(useVeer, useArunn bool) ([]utils.Profile, error) {
 	return profiles, nil
 }
 
-func main() {
-	/**
-	 * TODO: MAKE SURE YOU UPDATE utils.SiteMap BEFORE YOU RUN SCRIPT
-	 **/
+// TODO: MAKE SURE YOU SETUP FLAGS BEFORE YOU RUN SCRIPT
+func init() {
 	utils.SiteMap = map[string]bool{
 		utils.FootLocker:   true,
 		utils.FootAction:   true,
@@ -132,9 +133,18 @@ func main() {
 		utils.Eastbay:      true,
 	}
 
-	useVeer := true
-	useArunn := false
+	useVeer = true
+	useArunn = false
 
+	utils.Skus = map[string]string{
+		utils.FootLocker:   "1",
+		utils.FootAction:   "2",
+		utils.ChampsSports: "3",
+		utils.Eastbay:      "2",
+	}
+}
+
+func main() {
 	profiles, profilesErr := createProfiles(useVeer, useArunn)
 	if profilesErr != nil {
 		fmt.Println(profilesErr)
@@ -143,14 +153,5 @@ func main() {
 
 	fmt.Println()
 
-	/**
-	 * TODO: ADD SKUS BEFORE YOU RUN SCRIPT
-	 */
-	skus := map[string]string{
-		utils.FootLocker:   "1",
-		utils.FootAction:   "2",
-		utils.ChampsSports: "3",
-		utils.Eastbay:      "2",
-	}
-	utils.CreateAndExportTasks(skus, profiles)
+	utils.CreateAndExportTasks(profiles)
 }

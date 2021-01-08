@@ -61,15 +61,11 @@ func createProfiles(useVeer, useArunn bool) ([]utils.Profile, error) {
 			} else {
 				newProfile = utils.CreateProfile(virtualCard, index)
 			}
-		} else if useVeer {
-			if virtualCard.IsVeer {
-				newProfile = utils.CreateVeerProfile(virtualCard, index)
-			}
-		} else {
-			if !virtualCard.IsVeer {
-				newProfile = utils.CreateProfile(virtualCard, index)
-			}
-		}
+		} else if useVeer && virtualCard.IsVeer {
+			newProfile = utils.CreateVeerProfile(virtualCard, index)
+		} else if useArunn && !virtualCard.IsVeer {
+			newProfile = utils.CreateProfile(virtualCard, index)
+		}	
 
 		// TODO: is the a better way to check if a profile has been created?
 		if len(newProfile.Name) > 0 {
@@ -127,20 +123,14 @@ func createProfiles(useVeer, useArunn bool) ([]utils.Profile, error) {
 // TODO: MAKE SURE YOU SETUP FLAGS BEFORE YOU RUN SCRIPT
 func init() {
 	utils.SiteMap = map[string]bool{
-		utils.FootLocker:   true,
-		utils.FootAction:   true,
-		utils.ChampsSports: true,
-		utils.Eastbay:      true,
+		utils.FootLocker: true,
 	}
 
 	useVeer = true
-	useArunn = false
+	useArunn = true
 
 	utils.Skus = map[string]string{
-		utils.FootLocker:   "1",
-		utils.FootAction:   "2",
-		utils.ChampsSports: "3",
-		utils.Eastbay:      "2",
+		utils.FootLocker: "1",
 	}
 }
 

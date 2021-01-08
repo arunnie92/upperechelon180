@@ -9,7 +9,6 @@ next todo:
     - think this through, this is a big change
     - create profiles should ask which site you want to create a profile for
         - this same flag should create tasks, each task is different for each site
-- make ManipulateName better
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings
@@ -26,12 +25,14 @@ backlog:
     - how can i generate my own proxys to use instead of paying for the service
     - what does the data look like for Phantom notification settings
     - add other sites
-    - the problem creating manipulating MY full name, how many premutations of my name? 4 X 16 = 64?
     - should sku be passed in as a flag?
+    - make ManipulateName better
+        - the problem creating manipulating name, what if there are more profiles for a specific site being created than manipulations being created for that siteKey
+        - how many premutations of my name? (See below)
 
 
 NOTES:
 need to make maniputlate name better
- - arunn chanthirakanthan -> 4 * 16 = 64 || 1 || 1 * 16 || 4 * 1
- - veer patel -> 3 * 5 = 16 || 1 || 1 * 5 || 3 * 1
- - kush patel -> 4 * 5 = 20 || 1 || 1 * 5 || 4 * 1
+ - arunn chanthirakanthan -> 4 * 16 = 64 || 1 * 16 = 16 || 4 * 1 = 4 || 1 => 85
+ - veer patel             -> 3 * 5 = 16  || 1 * 5 = 5   || 3 * 1 = 3 || 1 => 25
+ - kush patel             -> 4 * 5 = 20  || 1 * 5 = 5   || 4 * 1 = 3 || 1 => 29

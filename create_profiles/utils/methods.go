@@ -28,8 +28,8 @@ func RandomIndex(min, max int) int {
 	return rand.Intn(max-min) + min
 }
 
-// ManipulateName manipulates name string
-func ManipulateName(name string) string {
+// ManipulateString manipulates name string
+func ManipulateString(name string) string {
 
 	nameIndex := RandomIndex(0, len(name))
 
@@ -39,16 +39,36 @@ func ManipulateName(name string) string {
 		string(runes[nameIndex:nameIndex+1]),
 		string(runes[nameIndex+1:len(name)]))
 
-	return strings.Title(strings.ToLower(newName))
+	return strings.ToLower(newName)
 }
 
-// ManipulateFullName | Manipulates full name and keeps track of used names
-func ManipulateFullName() (string, string) {
-	firstName := ManipulateName(FirstName)
-	lastName := ManipulateName(LastName)
+// ManipulateName |
+func ManipulateName() (string, string) {
+	manipulationChoice := RandomIndex(0, 3)
+
+	firstName := FirstName
+	lastName := LastName
+
+	switch manipulationChoice {
+	case 0:
+		// manipulates both the first name and last name
+		firstName = ManipulateString(FirstName)
+		lastName = ManipulateString(LastName)
+	case 1:
+		// manipulates just the first name and not the last name
+		firstName = ManipulateString(FirstName)
+		lastName = LastName
+	case 2:
+		// manipulates not the first name and just the last name
+		firstName = FirstName
+		lastName = ManipulateString(LastName)
+	default:
+		// no manpulation
+		firstName = FirstName
+		lastName = LastName
+	}
 
 	fullName := fmt.Sprintf("%s %s", firstName, lastName)
-
 	nameExists := FullNameMap[fullName]
 
 	if !nameExists {
@@ -56,32 +76,7 @@ func ManipulateFullName() (string, string) {
 		return firstName, lastName
 	}
 
-	return ManipulateFullName()
-}
-
-// ManipulateVeerFullName | Manipulates veers and kush name and keeps track of used names
-func ManipulateVeerFullName(isCharlesSchwab bool) (string, string) {
-	// TODO: FIX THIS there are more cards than number of manipulations
-	firstName := VeerFirstName
-	lastName := VeerLastName
-
-	if isCharlesSchwab {
-		firstName = KushFirstName
-	}
-
-	firstName = ManipulateName(firstName)
-	lastName = ManipulateName(lastName)
-
-	fullName := fmt.Sprintf("%s %s", firstName, lastName)
-
-	nameExists := FullNameMap[fullName]
-
-	if !nameExists {
-		FullNameMap[fullName] = true
-		return firstName, lastName
-	}
-
-	return ManipulateVeerFullName(isCharlesSchwab)
+	return ManipulateName()
 }
 
 // CreateAddress creates an address with a concatenated alphanumerica value
@@ -139,7 +134,7 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 	profile.Country = Country
 
 	// Setup First Name & Last Name
-	firstName, lastName := ManipulateFullName()
+	firstName, lastName := ManipulateName()
 	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
 
 	// TODO: create rules function based on what site the profile is being used
@@ -160,72 +155,6 @@ func CreateProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
 
 	// Setup Profile Name
 	profile.Name = fmt.Sprintf("Profile_%03d_Arunn_%s", index, site)
-
-	return profile
-}
-
-// CreateVeerProfile | returns a newly created profile based on an index and virtual card information for Veer
-func CreateVeerProfile(virtualCreditCard VirtualCCInfo, index int) Profile {
-	var profile Profile
-
-	// Setup Credit Card Information
-	profile.CCNumber = virtualCreditCard.CCNumber
-	profile.CVV = virtualCreditCard.CVV
-	profile.ExpMonth = virtualCreditCard.ExpMonth
-	profile.ExpYear = virtualCreditCard.ExpYear
-	profile.CardType = virtualCreditCard.CardType
-
-	// Setup Phone Number
-	profile.Phone = CreateRandomPhoneNumber()
-	if len(profile.Phone) != 10 {
-		fmt.Println(fmt.Sprintf("wrong number at %s", profile.Name))
-	}
-
-	// Setup Address
-	profile.Same = true
-
-	veerAddress := CreateAddress(VeerAddress)
-
-	profile.Shipping.Address = veerAddress
-	profile.Shipping.Apt = VeerApt
-	profile.Shipping.City = VeerCity
-	profile.Shipping.State = VeerState
-	profile.Shipping.Zip = VeerZip
-
-	profile.Billing.Address = veerAddress
-	profile.Billing.Apt = VeerApt
-	profile.Billing.City = VeerCity
-	profile.Billing.State = VeerState
-	profile.Billing.Zip = VeerZip
-
-	profile.Country = Country
-
-	isCharlesSchwab := false
-	if virtualCreditCard.CardCompany == charlesSchwab {
-		isCharlesSchwab = true
-	}
-
-	// Setup First Name & Last Name
-	firstName, lastName := ManipulateVeerFullName(isCharlesSchwab)
-	// TODO: ^the problem here is if what if there are more profiles for a specific site being created than manipulations being created for that site
-
-	// TODO: create rules function based on what site the profile is being used
-	site := virtualCreditCard.Site
-
-	profile.Shipping.FirstName = firstName
-	profile.Shipping.LastName = lastName
-	profile.Billing.FirstName = firstName
-	profile.Billing.LastName = lastName
-
-	// Setup Email
-	profile.Email = CreateRandomEmail(firstName, lastName)
-
-	// Setup Profile Name
-	if virtualCreditCard.CardCompany == charlesSchwab {
-		profile.Name = fmt.Sprintf("Profile_%03d_Veer_%s", index, site)
-	} else {
-		profile.Name = fmt.Sprintf("Profile_%03d_Kush_%s", index, site)
-	}
 
 	return profile
 }

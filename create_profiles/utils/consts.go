@@ -85,32 +85,4 @@ var NonFootSiteMap = map[string]bool{
 // Skus | map of sites
 var Skus = make(map[string]string)
 
-/*
- * Veer's Information
- */
-
-// VeerLastName | Veer's last name
-const VeerLastName = "patel"
-
-// KushFirstName | Kush's first name
-const KushFirstName = "kush"
-
-// VeerFirstName | Veer's first name
-const VeerFirstName = "veer"
-
-// VeerAddress | Veer's address
-const VeerAddress = "1501 N 31st Street"
-
-// VeerApt | Veer's apartment number address
-const VeerApt = "304"
-
-// VeerCity | Veer's city address
-const VeerCity = "Philadelphia"
-
-// VeerState | Veer's state address
-const VeerState = "PA"
-
-// VeerZip | Veer's zipcode address
-const VeerZip = "19121"
-
-const charlesSchwab = "CharlesSchwab"
+const captailOne = "CapitalOne"

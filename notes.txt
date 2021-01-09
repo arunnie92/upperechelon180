@@ -9,6 +9,7 @@ next todo:
     - think this through, this is a big change
     - create profiles should ask which site you want to create a profile for
         - this same flag should create tasks, each task is different for each site
+- Combine utils.SiteMap & utils.Skus
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings

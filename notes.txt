@@ -10,6 +10,7 @@ next todo:
     - create profiles should ask which site you want to create a profile for
         - this same flag should create tasks, each task is different for each site
 - Combine utils.SiteMap & utils.Skus
+- Figure out how to recreate proxylsit in phantom
 
 backlog:
     - make sure CCInfo.CardType ony allows the card type strings

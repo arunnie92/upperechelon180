@@ -82,7 +82,9 @@ var NonFootSiteMap = map[string]bool{
 	walmart:     true,
 }
 
-// Skus | map of sites
-var Skus = make(map[string]string)
+// SiteSkusMap | map of sites to a list of skus
+var SiteSkusMap = make(map[string][]string)
 
 const captailOne = "CapitalOne"
+
+var ProxyList = make(map[string]bool)

@@ -209,24 +209,29 @@ func CreateNonFootSiteTask(sku, site, profileName string) Task {
 	}
 }
 
+// TODO: add comment for default values on why they are default
 // CreateFootSiteTask | initializes and creates a single task for a foot site
-func CreateFootSiteTask(sku, site, profileName string, paypal bool) Task {
+func CreateFootSiteTask(sku, site, profileName string) Task {
+	proxyList := fmt.Sprintf("%s_ProxyList", site)
+
+	ProxyList[proxyList] = true
+
 	return Task{
 		URL:            sku,
 		Size:           "R",
 		Proxy:          "",
 		Profile:        profileName,
 		Site:           site,
-		RandomEmail:    true, // TODO: Is this actually using a random email or the one I create?
+		RandomEmail:    true,
 		Desktop:        false,
 		CheckoutMode:   "none",
 		CaptchaSource:  "local",
 		CartQuantity:   "",
-		ProxyList:      fmt.Sprintf("%s_ProxyList", site),
+		ProxyList:      proxyList,
 		ManualCheckout: false,
 		RepeatCheckout: false,
 		MaxPrice:       "",
-		PaypalCheckout: paypal,
+		PaypalCheckout: false,
 	}
 }
 
@@ -237,7 +242,7 @@ func CreateFiveTasks(sku, site, profileName string) []Task {
 	if FootSiteMap[site] {
 		// TODO: Should I make all paypals?
 		for i := 0; i < 5; i++ {
-			task := CreateFootSiteTask(sku, site, profileName, false)
+			task := CreateFootSiteTask(sku, site, profileName)
 			tasks = append(tasks, task)
 		}
 	}
@@ -254,22 +259,24 @@ func CreateFiveTasks(sku, site, profileName string) []Task {
 
 // CreateAndExportTasks | creates 5 tasks per profile and exports all created tasks per sku
 func CreateAndExportTasks(profiles []Profile) {
-	if len(Skus) == 0 {
+	if len(SiteSkusMap) == 0 {
 		fmt.Println("sku can not be empty")
 		return
 	}
 
 	tasks := []Task{}
 
-	for siteKey, skuValue := range Skus {
-		fmt.Println(fmt.Sprintf("Creating tasks for sku %s for site %s", skuValue, siteKey))
+	for siteKey, skusArr := range SiteSkusMap {
+		for _, skuValue := range skusArr {
+			fmt.Println(fmt.Sprintf("Creating tasks for sku %s for site %s", skuValue, siteKey))
 
-		for _, profile := range profiles {
-			profileSite := strings.Split(profile.Name, "_")[3]
+			for _, profile := range profiles {
+				profileSite := strings.Split(profile.Name, "_")[3]
 
-			if profileSite == siteKey {
-				newFiveTasks := CreateFiveTasks(skuValue, profileSite, profile.Name)
-				tasks = append(tasks, newFiveTasks...)
+				if profileSite == siteKey {
+					newFiveTasks := CreateFiveTasks(skuValue, profileSite, profile.Name)
+					tasks = append(tasks, newFiveTasks...)
+				}
 			}
 		}
 	}

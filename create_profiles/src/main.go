@@ -122,21 +122,16 @@ func createProfiles(useVeer, useArunn bool) ([]utils.Profile, error) {
 
 // TODO: MAKE SURE YOU SETUP FLAGS BEFORE YOU RUN SCRIPT
 func init() {
-	utils.SiteMap = map[string]bool{
-		utils.FootLocker:   true,
-		utils.Eastbay:      true,
-		utils.FootAction:   true,
-		utils.ChampsSports: true,
-	}
-
 	useVeer = true
 	useArunn = true
 
-	utils.Skus = map[string]string{
-		utils.FootLocker:   "55088118",
-		utils.Eastbay:      "55088118",
-		utils.FootAction:   "55088118",
-		utils.ChampsSports: "55088118",
+	utils.SiteSkusMap = map[string][]string{
+		utils.FootLocker:   []string{"D1391002", "D1391001", "D1399100", "D1503100"},
+		utils.ChampsSports: []string{"D1503100"},
+	}
+
+	for siteKey := range utils.SiteSkusMap {
+		utils.SiteMap[siteKey] = true
 	}
 }
 
@@ -150,4 +145,11 @@ func main() {
 	fmt.Println()
 
 	utils.CreateAndExportTasks(profiles)
+
+	fmt.Println()
+
+	fmt.Println("Need to create Proxy Lists for:")
+	for key := range utils.ProxyList {
+		fmt.Println(key)
+	}
 }
